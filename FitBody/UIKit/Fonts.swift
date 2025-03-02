@@ -1,6 +1,6 @@
 import UIKit
 
-enum Fonts {
+enum Fonts: Sendable {
     static var title0: UIFont {
         .boldSystemFont(ofSize: 28)
     }

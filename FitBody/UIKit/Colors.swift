@@ -1,6 +1,6 @@
 import UIKit
 
-enum Colors {}
+enum Colors: Sendable {}
 
 // MARK: - Button
 

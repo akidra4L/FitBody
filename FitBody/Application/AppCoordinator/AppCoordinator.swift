@@ -12,7 +12,17 @@ final class AppCoordinator: Coordinator {
     }
     
     func start() {
-        runTabBarFlow()
+        runOnboardingFlow()
+    }
+    
+    private func runOnboardingFlow() {
+        let coordinator = coordinatorsFactory.makeOnboarding(with: router)
+        coordinator.onFinish = { [weak self, weak coordinator] in
+            self?.removeDependency(coordinator)
+            self?.runTabBarFlow()
+        }
+        addDependency(coordinator)
+        coordinator.start()
     }
     
     private func runTabBarFlow() {

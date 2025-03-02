@@ -5,6 +5,13 @@ final class CoordinatorsFactory {
         AppCoordinator(router: router)
     }
     
+    func makeOnboarding(with router: Router) -> Coordinator & OnboardingCoordinatorOutput {
+        OnboardingCoordinator(
+            router: router,
+            modulesFactory: ModulesFactory()
+        )
+    }
+    
     func makeTabBar(with router: Router) -> Coordinator {
         TabBarCoordinator(
             router: router,
