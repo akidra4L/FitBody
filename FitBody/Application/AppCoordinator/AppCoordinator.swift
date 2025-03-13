@@ -19,14 +19,14 @@ final class AppCoordinator: Coordinator {
         let coordinator = coordinatorsFactory.makeOnboarding(with: router)
         coordinator.onFinish = { [weak self, weak coordinator] in
             self?.removeDependency(coordinator)
-            self?.runAuthFlow()
+            self?.runAuthFlow(state: .register)
         }
         addDependency(coordinator)
         coordinator.start()
     }
     
-    private func runAuthFlow() {
-        let coordinator = coordinatorsFactory.makeAuth(with: router)
+    private func runAuthFlow(state: AuthState) {
+        let coordinator = coordinatorsFactory.makeAuth(with: router, state: state)
         coordinator.onFinish = { [weak self, weak coordinator] in
             self?.removeDependency(coordinator)
             self?.runTabBarFlow()

@@ -14,10 +14,16 @@ final class AuthCoordinator: Coordinator, AuthCoordinatorOutput {
     var children: [Coordinator] = []
     
     var router: Router
+    private let state: AuthState
     private let modulesFactory: AuthModulesFactory
     
-    init(router: Router, modulesFactory: AuthModulesFactory) {
+    init(
+        router: Router,
+        state: AuthState,
+        modulesFactory: AuthModulesFactory
+    ) {
         self.router = router
+        self.state = state
         self.modulesFactory = modulesFactory
     }
     
@@ -26,7 +32,7 @@ final class AuthCoordinator: Coordinator, AuthCoordinatorOutput {
     }
     
     private func presentAuth() {
-        let auth = modulesFactory.makeAuth(with: .login)
+        let auth = modulesFactory.makeAuth(with: state)
         router.setRootModule(auth)
     }
 }

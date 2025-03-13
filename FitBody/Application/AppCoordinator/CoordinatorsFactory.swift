@@ -12,9 +12,10 @@ final class CoordinatorsFactory {
         )
     }
     
-    func makeAuth(with router: Router) -> Coordinator & AuthCoordinator {
+    func makeAuth(with router: Router, state: AuthState) -> Coordinator & AuthCoordinator {
         AuthCoordinator(
             router: router,
+            state: state,
             modulesFactory: ModulesFactory()
         )
     }
