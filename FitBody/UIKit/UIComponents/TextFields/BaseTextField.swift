@@ -102,7 +102,7 @@ open class BaseTextField: UITextField {
             return
         }
 
-        layer.borderColor = isEditing ? UIColor.gray.withAlphaComponent(0.7).cgColor : UIColor.gray.cgColor
+        layer.borderColor = isEditing ? Colors.fillStrokePressed.cgColor : Colors.fillStroke.cgColor
     }
 
     private func configurePlaceholder() {
@@ -111,7 +111,7 @@ open class BaseTextField: UITextField {
                 string: placeholder,
                 attributes: [
                     .font: Fonts.body3,
-                    .foregroundColor: UIColor.lightGray
+                    .foregroundColor: Colors.textTertiary
                 ]
             )
         } else {

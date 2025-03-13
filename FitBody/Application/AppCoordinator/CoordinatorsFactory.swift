@@ -12,6 +12,13 @@ final class CoordinatorsFactory {
         )
     }
     
+    func makeAuth(with router: Router) -> Coordinator & AuthCoordinator {
+        AuthCoordinator(
+            router: router,
+            modulesFactory: ModulesFactory()
+        )
+    }
+    
     func makeTabBar(with router: Router) -> Coordinator {
         TabBarCoordinator(
             router: router,

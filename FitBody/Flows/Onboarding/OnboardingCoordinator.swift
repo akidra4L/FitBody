@@ -1,8 +1,12 @@
 import UIKit
 
+// MARK: - OnboardingCoordinatorOutput
+
 protocol OnboardingCoordinatorOutput: AnyObject {
     var onFinish: (() -> Void)? { get set }
 }
+
+// MARK: - OnboardingCoordinator
 
 final class OnboardingCoordinator: Coordinator, OnboardingCoordinatorOutput {
     var onFinish: (() -> Void)?
