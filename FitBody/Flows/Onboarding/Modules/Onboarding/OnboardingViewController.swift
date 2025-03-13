@@ -1,9 +1,13 @@
 import UIKit
 import SnapKit
 
+// MARK: - OnboardingViewOutput
+
 protocol OnboardingViewOutput: AnyObject {
     var onFinish: ((_ kind: OnboardingKind) -> Void)? { get set }
 }
+
+// MARK: - OnboardingViewController
 
 final class OnboardingViewController: BaseViewController, OnboardingViewOutput {
     typealias Kind = OnboardingKind
@@ -35,6 +39,8 @@ final class OnboardingViewController: BaseViewController, OnboardingViewOutput {
         NavigationBarConfigurator().configure(navigationBar: navigationBar, with: .transparent)
     }
 }
+
+// MARK: - OnboardingViewDelegate
 
 extension OnboardingViewController: OnboardingViewDelegate {
     func didTapActionButton(in view: OnboardingView) {

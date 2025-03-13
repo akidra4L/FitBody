@@ -49,6 +49,10 @@ extension Colors {
         UIColor(named: "fill-shadow-primary")!
     }
     
+    static var fillStrokePressed: UIColor {
+        UIColor(named: "fill-stroke-pressed")!
+    }
+    
     static var fillStroke: UIColor {
         UIColor(named: "fill-stroke")!
     }

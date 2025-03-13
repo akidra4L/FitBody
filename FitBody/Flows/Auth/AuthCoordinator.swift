@@ -1,8 +1,12 @@
 import UIKit
 
+// MARK: - AuthCoordinatorOutput
+
 protocol AuthCoordinatorOutput: AnyObject {
     var onFinish: (() -> Void)? { get set }
 }
+
+// MARK: - AuthCoordinator
 
 final class AuthCoordinator: Coordinator, AuthCoordinatorOutput {
     var onFinish: (() -> Void)?
@@ -18,6 +22,11 @@ final class AuthCoordinator: Coordinator, AuthCoordinatorOutput {
     }
     
     func start() {
-        
+        presentAuth()
+    }
+    
+    private func presentAuth() {
+        let auth = modulesFactory.makeAuth(with: .login)
+        router.setRootModule(auth)
     }
 }

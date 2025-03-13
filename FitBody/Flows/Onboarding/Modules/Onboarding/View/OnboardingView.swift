@@ -1,9 +1,13 @@
 import UIKit
 import SnapKit
 
+// MARK: - OnboardingViewDelegate
+
 protocol OnboardingViewDelegate: AnyObject {
     func didTapActionButton(in view: OnboardingView)
 }
+
+// MARK: - OnboardingView
 
 final class OnboardingView: UIView {
     typealias ViewModel = OnboardingViewModel
