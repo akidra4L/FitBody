@@ -5,5 +5,9 @@ extension Resolver {
         register { AuthManagerImpl() }
             .implements(AuthManager.self)
             .scope(.shared)
+        
+        register { AuthRegisterProviderImpl() }
+            .implements(AuthRegisterProvider.self)
+            .scope(.application)
     }
 }

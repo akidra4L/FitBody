@@ -89,11 +89,11 @@ open class BaseTextField: UITextField {
         configureBorderColor()
 
         guard !hasError else {
-            layer.borderWidth = 2
+            layer.borderWidth = 1
             return
         }
 
-        layer.borderWidth = isEditing ? 2 : 0.5
+        layer.borderWidth = isEditing ? 1 : 0.5
     }
 
     private func configureBorderColor() {

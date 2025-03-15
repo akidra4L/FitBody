@@ -1,4 +1,5 @@
 import UIKit
+import Resolver
 
 // MARK: - GoalViewOutput
 
@@ -38,6 +39,9 @@ final class GoalViewController: BaseViewController, GoalViewOutput {
     
     private lazy var dataSourceImpl = GoalCollectionViewDataSourceImpl(with: goals)
     private lazy var delegateImpl = GoalCollectionViewDelegateImpl(with: goals)
+    
+    @Injected private var authManager: AuthManager
+    @Injected private var authRegisterProvider: AuthRegisterProvider
     
     override func loadView() {
         view = mainView
@@ -99,7 +103,27 @@ final class GoalViewController: BaseViewController, GoalViewOutput {
 // MARK: - GoalViewDelegate
 
 extension GoalViewController: GoalViewDelegate {
-    func didTapActionButton(in view: GoalView) {
-        onFinish?()
+    func goalView(_ view: GoalView, didTapActionButton button: LoadableButton) {
+        authRegisterProvider.updateGoal(with: selectedGoal)
+        
+        guard let registerRequest = authRegisterProvider.request else {
+            assertionFailure()
+            return
+        }
+        
+        button.isLoading = true
+        Task { [weak self, manager = authManager] in
+            defer {
+                button.isLoading = false
+            }
+            
+            do {
+                try await manager.register(with: registerRequest)
+                
+                self?.onFinish?()
+            } catch {
+                print("ERROR: ", error.localizedDescription)
+            }
+        }
     }
 }

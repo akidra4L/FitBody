@@ -1,4 +1,5 @@
 import UIKit
+import Resolver
 
 // MARK: - AuthViewOutput
 
@@ -14,6 +15,8 @@ final class AuthViewController: BaseViewController, AuthViewOutput {
     var onFinish: ((Bool) -> Void)?
     
     private lazy var mainView = AuthView(with: state, and: self)
+    
+    @Injected private var authRegisterProvider: AuthRegisterProvider
     
     private var state: State {
         didSet {
@@ -50,7 +53,37 @@ final class AuthViewController: BaseViewController, AuthViewOutput {
 
 extension AuthViewController: AuthViewDelegate {
     func didTapPrimaryButton(in view: AuthView) {
-        onFinish?(state == .register)
+        switch state {
+        case .login:
+            guard
+                let email = view.email,
+                let password = view.password
+            else {
+                mainView.configureErrorVisibility()
+                return
+            }
+            
+            onFinish?(false)
+        case .register:
+            guard
+                let firstName = view.firstName,
+                let lastName = view.lastName,
+                let email = view.email,
+                let password = view.password
+            else {
+                mainView.configureErrorVisibility()
+                return
+            }
+            
+            authRegisterProvider.updateMainInfo(
+                firstName: firstName,
+                lastName: lastName,
+                email: email,
+                password: password
+            )
+            
+            onFinish?(true)
+        }
     }
     
     func didTapSecondaryButton(in view: AuthView) {

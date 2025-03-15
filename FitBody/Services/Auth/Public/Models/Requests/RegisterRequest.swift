@@ -3,15 +3,27 @@ import Foundation
 // MARK: - RegisterRequest
 
 struct RegisterRequest: Encodable, Sendable {
-    let firstName: String
-    let secondName: String
-    let email: String
-    let password: String
-    let gender: Gender
-    let birthDate: Date
-    let weight: Int
-    let height: Int
-    let goal: Goal
+    var firstName: String
+    var lastName: String
+    var email: String
+    var password: String
+    var gender: Gender
+    var birthDate: Date
+    var weight: Double
+    var height: Double
+    var goal: Goal
+    
+    init() {
+        self.firstName = ""
+        self.lastName = ""
+        self.email = ""
+        self.password = ""
+        self.gender = .man
+        self.birthDate = Date()
+        self.weight = 0
+        self.height = 0
+        self.goal = .improveMobility
+    }
 }
 
 // MARK: - RegisterRequest.Goal

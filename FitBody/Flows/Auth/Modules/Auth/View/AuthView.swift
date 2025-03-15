@@ -14,9 +14,25 @@ final class AuthView: UIView {
     typealias State = AuthState
     typealias Delegate = AuthViewDelegate
     
+    var firstName: String? {
+        firstNameTextFieldView.text?.nilIfEmpty
+    }
+    
+    var lastName: String? {
+        lastNameTextFieldView.text?.nilIfEmpty
+    }
+    
+    var email: String? {
+        emailTextFieldView.text?.nilIfEmpty
+    }
+    
+    var password: String? {
+        passwordTextFieldView.text?.nilIfEmpty
+    }
+    
     private lazy var verticalStackView = makeVerticalStackView()
     private lazy var firstNameTextFieldView = TextFieldView(with: "First name", and: "Enter first name")
-    private lazy var secondNameTextFieldView = TextFieldView(with: "Second name", and: "Enter second name")
+    private lazy var lastNameTextFieldView = TextFieldView(with: "Last name", and: "Enter last name")
     private lazy var emailTextFieldView = TextFieldView(with: "Email", and: "Enter email")
     private lazy var passwordTextFieldView = TextFieldView(with: "Password", and: "Enter password", isPassword: true)
     private lazy var primaryButton = makePrimaryButton()
@@ -56,10 +72,24 @@ final class AuthView: UIView {
         }
     }
     
+    func configureErrorVisibility() {
+        firstNameTextFieldView.configureErrorVisibilityIfNeeded()
+        lastNameTextFieldView.configureErrorVisibilityIfNeeded()
+        emailTextFieldView.configureErrorVisibilityIfNeeded()
+        passwordTextFieldView.configureErrorVisibilityIfNeeded()
+    }
+    
     private func configureData(with state: State) {
+        [
+            firstNameTextFieldView,
+            lastNameTextFieldView,
+            emailTextFieldView,
+            passwordTextFieldView
+        ].forEach { $0.setupInitialState() }
+        
         let arrangedSubviews = state == .login
             ? [emailTextFieldView, passwordTextFieldView]
-            : [firstNameTextFieldView, secondNameTextFieldView, emailTextFieldView, passwordTextFieldView]
+            : [firstNameTextFieldView, lastNameTextFieldView, emailTextFieldView, passwordTextFieldView]
         
         verticalStackView.arrangedSubviews.forEach { $0.removeFromSuperview() }
         arrangedSubviews.forEach { verticalStackView.addArrangedSubview($0) }
@@ -114,7 +144,7 @@ final class AuthView: UIView {
     private func makeVerticalStackView() -> UIStackView {
         let arrangedSubviews = state == .login
             ? [emailTextFieldView, passwordTextFieldView]
-            : [firstNameTextFieldView, secondNameTextFieldView, emailTextFieldView, passwordTextFieldView]
+            : [firstNameTextFieldView, lastNameTextFieldView, emailTextFieldView, passwordTextFieldView]
         
         let stackView = UIStackView(arrangedSubviews: arrangedSubviews)
         stackView.axis = .vertical
@@ -179,6 +209,14 @@ extension AuthView {
                 UIImage(systemName: imageName),
                 for: .normal
             )
+        }
+        
+        func configureErrorVisibilityIfNeeded() {
+            textField.hasError = (text?.nilIfEmpty == nil)
+        }
+        
+        func setupInitialState() {
+            textField.hasError = false
         }
         
         private func setup() {
@@ -256,6 +294,7 @@ extension AuthView.TextFieldView {
             isSecureTextEntry = true
             rightView = toggleButton
             rightViewMode = .always
+            textContentType = .oneTimeCode
         }
     }
 }

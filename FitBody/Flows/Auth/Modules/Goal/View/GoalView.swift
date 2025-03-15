@@ -4,7 +4,7 @@ import SnapKit
 // MARK: - GoalViewDelegate
 
 protocol GoalViewDelegate: AnyObject {
-    func didTapActionButton(in view: GoalView)
+    func goalView(_ view: GoalView, didTapActionButton button: LoadableButton)
 }
 
 // MARK: - GoalView
@@ -41,8 +41,8 @@ final class GoalView: UIView {
     }
     
     @objc
-    private func actionButtonDidTap() {
-        delegate?.didTapActionButton(in: self)
+    private func actionButtonDidTap(_ button: BaseButton) {
+        delegate?.goalView(self, didTapActionButton: button)
     }
     
     private func setup() {
