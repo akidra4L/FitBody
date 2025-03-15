@@ -34,7 +34,7 @@ final class AuthCoordinator: Coordinator, AuthCoordinatorOutput {
     private func presentAuth() {
         let auth = modulesFactory.makeAuth(with: state)
         auth.onFinish = { [weak self] isRegister in
-            isRegister ? self?.presentGoal() : self?.presentAuthSuccess(with: "Alikhan")
+            isRegister ? self?.presentUserProfileSet() : self?.presentAuthSuccess(with: "Alikhan")
         }
         router.setRootModule(auth)
     }
@@ -55,5 +55,13 @@ final class AuthCoordinator: Coordinator, AuthCoordinatorOutput {
             self?.presentAuthSuccess(with: "Alikhan")
         }
         router.push(goal)
+    }
+    
+    private func presentUserProfileSet() {
+        let userProfileSet = modulesFactory.makeUserProfileSet()
+        userProfileSet.onFinish = { [weak self] in
+            self?.presentGoal()
+        }
+        router.push(userProfileSet)
     }
 }

@@ -30,13 +30,17 @@ final class AuthView: UIView {
         passwordTextFieldView.text?.nilIfEmpty
     }
     
+    private lazy var scrollView = makeScrollView()
     private lazy var verticalStackView = makeVerticalStackView()
     private lazy var firstNameTextFieldView = TextFieldView(with: "First name", and: "Enter first name")
     private lazy var lastNameTextFieldView = TextFieldView(with: "Last name", and: "Enter last name")
     private lazy var emailTextFieldView = TextFieldView(with: "Email", and: "Enter email")
     private lazy var passwordTextFieldView = TextFieldView(with: "Password", and: "Enter password", isPassword: true)
+    private lazy var bottomView = makeBottomView()
     private lazy var primaryButton = makePrimaryButton()
     private lazy var secondaryButton = makeSecondaryButton()
+    
+    private let notificationCenter = NotificationCenter.default
     
     private var state: State
     private weak var delegate: Delegate?
@@ -62,6 +66,31 @@ final class AuthView: UIView {
     @objc
     private func secondaryButtonDidTap() {
         delegate?.didTapSecondaryButton(in: self)
+    }
+    
+    @objc
+    private func applicationStateDidChange(with notification: Notification) {
+        let appearance = KeyboardAppearance(from: notification)
+        let bottomOffset = (notification.name == UIResponder.keyboardWillShowNotification)
+            ? -(appearance.endFrame.height - safeAreaInsets.bottom + 12)
+            : -12
+
+        UIView.animate(
+            withDuration: appearance.animationDuration,
+            delay: 0,
+            options: appearance.animationOptions,
+            animations: { [weak self] in
+                guard let self else {
+                    return
+                }
+
+                bottomView.snp.updateConstraints { make in
+                    make.bottom.equalTo(self.safeAreaLayoutGuide).offset(bottomOffset)
+                }
+                layoutIfNeeded()
+            },
+            completion: nil
+        )
     }
     
     func configure(with state: State) {
@@ -115,30 +144,50 @@ final class AuthView: UIView {
     }
     
     private func setup() {
-        [
-            verticalStackView,
-            primaryButton,
-            secondaryButton
-        ].forEach { addSubview($0) }
+        [scrollView, bottomView].forEach { addSubview($0) }
         backgroundColor = Colors.fillInput
         
         setupConstraints()
+        setupObservers()
     }
     
     private func setupConstraints() {
-        verticalStackView.snp.makeConstraints { make in
+        scrollView.snp.makeConstraints { make in
             make.top.equalTo(safeAreaLayoutGuide).offset(16)
             make.directionalHorizontalEdges.equalToSuperview().inset(16)
-            make.bottom.lessThanOrEqualTo(primaryButton.snp.top).offset(-32)
+            make.bottom.equalTo(bottomView.snp.top).offset(-32)
         }
-        primaryButton.snp.makeConstraints { make in
-            make.directionalHorizontalEdges.equalToSuperview().inset(16)
-            make.bottom.equalTo(secondaryButton.snp.top).offset(-8)
+        verticalStackView.snp.makeConstraints { make in
+            make.directionalEdges.equalToSuperview()
+            make.width.equalTo(scrollView)
         }
-        secondaryButton.snp.makeConstraints { make in
+        bottomView.snp.makeConstraints { make in
             make.directionalHorizontalEdges.equalToSuperview().inset(16)
             make.bottom.equalTo(safeAreaLayoutGuide).offset(-12)
         }
+    }
+    
+    private func setupObservers() {
+        notificationCenter.addObserver(
+            self,
+            selector: #selector(applicationStateDidChange),
+            name: UIResponder.keyboardWillShowNotification,
+            object: nil
+        )
+        notificationCenter.addObserver(
+            self,
+            selector: #selector(applicationStateDidChange),
+            name: UIResponder.keyboardWillHideNotification,
+            object: nil
+        )
+    }
+    
+    private func makeScrollView() -> UIScrollView {
+        let scrollView = UIScrollView()
+        scrollView.addSubview(verticalStackView)
+        scrollView.alwaysBounceVertical = true
+        scrollView.showsVerticalScrollIndicator = false
+        return scrollView
     }
     
     private func makeVerticalStackView() -> UIStackView {
@@ -147,6 +196,13 @@ final class AuthView: UIView {
             : [firstNameTextFieldView, lastNameTextFieldView, emailTextFieldView, passwordTextFieldView]
         
         let stackView = UIStackView(arrangedSubviews: arrangedSubviews)
+        stackView.axis = .vertical
+        stackView.spacing = 16
+        return stackView
+    }
+    
+    private func makeBottomView() -> UIStackView {
+        let stackView = UIStackView(arrangedSubviews: [primaryButton, secondaryButton])
         stackView.axis = .vertical
         stackView.spacing = 16
         return stackView

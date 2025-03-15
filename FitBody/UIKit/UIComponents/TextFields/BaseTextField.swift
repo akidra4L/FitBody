@@ -1,6 +1,13 @@
 import UIKit
 
+// MARK: - BaseTextField
+
 open class BaseTextField: UITextField {
+    enum Size {
+        case medium
+        case large
+    }
+    
     override public var intrinsicContentSize: CGSize {
         makeIntrinsicSize(for: size)
     }
@@ -25,7 +32,7 @@ open class BaseTextField: UITextField {
         }
     }
 
-    public var hasError = false {
+    var hasError = false {
         didSet {
             guard oldValue != hasError else {
                 return
@@ -46,7 +53,7 @@ open class BaseTextField: UITextField {
     }
 
     @available(*, unavailable)
-    public required init?(coder: NSCoder) {
+    required public init?(coder: NSCoder) {
         nil
     }
 
@@ -123,6 +130,7 @@ open class BaseTextField: UITextField {
         addTarget(self, action: #selector(baseTextFieldEditingDidBegin), for: .editingDidBegin)
         addTarget(self, action: #selector(baseTextFieldEditingDidEnd), for: .editingDidEnd)
         clipsToBounds = true
+        delegate = self
         font = Fonts.body1
         layer.cornerRadius = 12
         leftView = UIView()
@@ -148,9 +156,11 @@ open class BaseTextField: UITextField {
     }
 }
 
-extension BaseTextField {
-    enum Size {
-        case medium
-        case large
+// MARK: - UITextFieldDelegate
+
+extension BaseTextField: UITextFieldDelegate {
+    public func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+        textField.resignFirstResponder()
+        return true
     }
 }

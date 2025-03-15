@@ -4,6 +4,7 @@ protocol AuthModulesFactory: AnyObject {
     func makeAuth(with state: AuthState) -> Presentable & AuthViewOutput
     func makeAuthSuccess(with name: String) -> Presentable & AuthSuccessViewOutput
     func makeGoal() -> Presentable & GoalViewOutput
+    func makeUserProfileSet() -> Presentable & UserProfileSetViewOutput
 }
 
 extension ModulesFactory: AuthModulesFactory {
@@ -17,5 +18,9 @@ extension ModulesFactory: AuthModulesFactory {
     
     func makeGoal() -> Presentable & GoalViewOutput {
         GoalViewController()
+    }
+    
+    func makeUserProfileSet() -> Presentable & UserProfileSetViewOutput {
+        UserProfileSetViewController()
     }
 }

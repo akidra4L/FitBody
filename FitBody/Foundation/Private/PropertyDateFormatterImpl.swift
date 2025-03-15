@@ -17,5 +17,6 @@ extension DateFormatter {
 
         self.dateFormat = dateFormat
         self.setLocalizedDateFormatFromTemplate(dateFormat)
+        self.timeZone = .utc
     }
 }
