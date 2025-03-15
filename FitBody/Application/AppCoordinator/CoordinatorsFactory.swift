@@ -2,7 +2,10 @@ import UIKit
 
 final class CoordinatorsFactory {
     func makeApp(with router: Router) -> Coordinator {
-        AppCoordinator(router: router)
+        AppCoordinator(
+            router: router,
+            modulesFactory: ModulesFactory()
+        )
     }
     
     func makeOnboarding(with router: Router) -> Coordinator & OnboardingCoordinatorOutput {

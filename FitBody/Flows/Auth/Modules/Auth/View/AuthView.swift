@@ -4,7 +4,7 @@ import SnapKit
 // MARK: - AuthViewDelegate
 
 protocol AuthViewDelegate: AnyObject {
-    func didTapPrimaryButton(in view: AuthView)
+    func authView(_ view: AuthView, didTapPrimaryButton button: LoadableButton)
     func didTapSecondaryButton(in view: AuthView)
 }
 
@@ -59,8 +59,8 @@ final class AuthView: UIView {
     }
     
     @objc
-    private func primaryButtonDidTap() {
-        delegate?.didTapPrimaryButton(in: self)
+    private func primaryButtonDidTap(_ button: BaseButton) {
+        delegate?.authView(self, didTapPrimaryButton: button)
     }
     
     @objc

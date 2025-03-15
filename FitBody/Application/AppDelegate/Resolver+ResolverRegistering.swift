@@ -9,6 +9,7 @@ extension Resolver: ResolverRegistering {
     
     private static func registerAppServices() {
         registerAuthServices()
+        registerAuthorizedUserDataFetch()
         registerOnboardingServices()
         registerUserServices()
     }

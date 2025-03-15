@@ -5,15 +5,11 @@ final class AuthManagerImpl: AuthManager {
     
     // TODO: - add relative path
     func login(with request: LoginRequest) async throws {
-        try await Task.sleep(nanoseconds: 5_000_000)
-        
 //        try await networkClient.get("")
     }
     
     // TODO: - add relative path
     func register(with request: RegisterRequest) async throws {
-        try await Task.sleep(nanoseconds: 5_000_000)
-        
 //        try await networkClient.post("")
     }
 }

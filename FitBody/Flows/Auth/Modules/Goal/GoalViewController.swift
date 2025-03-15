@@ -42,6 +42,7 @@ final class GoalViewController: BaseViewController, GoalViewOutput {
     
     @Injected private var authManager: AuthManager
     @Injected private var authRegisterProvider: AuthRegisterProvider
+    @Injected private var authorizedUserDataFetcher: AuthorizedUserDataFetcher
     
     override func loadView() {
         view = mainView
@@ -112,13 +113,15 @@ extension GoalViewController: GoalViewDelegate {
         }
         
         button.isLoading = true
-        Task { [weak self, manager = authManager] in
+        Task { [weak self, manager = authManager, authorizedUserDataFetcher] in
             defer {
                 button.isLoading = false
             }
             
             do {
                 try await manager.register(with: registerRequest)
+                
+                await authorizedUserDataFetcher.fetch()
                 
                 self?.onFinish?()
             } catch {

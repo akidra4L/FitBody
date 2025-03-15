@@ -1,4 +1,5 @@
 import UIKit
+import Resolver
 
 // MARK: - AuthCoordinatorOutput
 
@@ -12,6 +13,8 @@ final class AuthCoordinator: Coordinator, AuthCoordinatorOutput {
     var onFinish: (() -> Void)?
     
     var children: [Coordinator] = []
+    
+    @Injected private var userProfileProvider: UserProfileProvider
     
     var router: Router
     private let state: AuthState
@@ -34,12 +37,17 @@ final class AuthCoordinator: Coordinator, AuthCoordinatorOutput {
     private func presentAuth() {
         let auth = modulesFactory.makeAuth(with: state)
         auth.onFinish = { [weak self] isRegister in
-            isRegister ? self?.presentUserProfileSet() : self?.presentAuthSuccess(with: "Alikhan")
+            isRegister ? self?.presentUserProfileSet() : self?.presentAuthSuccess()
         }
         router.setRootModule(auth)
     }
     
-    private func presentAuthSuccess(with name: String) {
+    private func presentAuthSuccess() {
+        guard let name = userProfileProvider.userProfile?.firstName else {
+            assertionFailure()
+            return
+        }
+        
         let authSuccess = modulesFactory.makeAuthSuccess(with: name)
         authSuccess.onFinish = { [weak self] in
             self?.router.dismissModule { [weak self] in
@@ -52,7 +60,7 @@ final class AuthCoordinator: Coordinator, AuthCoordinatorOutput {
     private func presentGoal() {
         let goal = modulesFactory.makeGoal()
         goal.onFinish = { [weak self] in
-            self?.presentAuthSuccess(with: "Alikhan")
+            self?.presentAuthSuccess()
         }
         router.push(goal)
     }

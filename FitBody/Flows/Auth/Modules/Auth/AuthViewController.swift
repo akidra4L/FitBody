@@ -16,7 +16,9 @@ final class AuthViewController: BaseViewController, AuthViewOutput {
     
     private lazy var mainView = AuthView(with: state, and: self)
     
+    @Injected private var authManager: AuthManager
     @Injected private var authRegisterProvider: AuthRegisterProvider
+    @Injected private var authorizedUserDataFetcher: AuthorizedUserDataFetcher
     
     private var state: State {
         didSet {
@@ -52,41 +54,66 @@ final class AuthViewController: BaseViewController, AuthViewOutput {
 // MARK: - AuthViewDelegate
 
 extension AuthViewController: AuthViewDelegate {
-    func didTapPrimaryButton(in view: AuthView) {
+    func authView(_ view: AuthView, didTapPrimaryButton button: LoadableButton) {
         switch state {
         case .login:
-            guard
-                let email = view.email,
-                let password = view.password
-            else {
-                mainView.configureErrorVisibility()
-                return
-            }
-            
-            onFinish?(false)
+            handleLogin(button)
         case .register:
-            guard
-                let firstName = view.firstName,
-                let lastName = view.lastName,
-                let email = view.email,
-                let password = view.password
-            else {
-                mainView.configureErrorVisibility()
-                return
-            }
-            
-            authRegisterProvider.updateMainInfo(
-                firstName: firstName,
-                lastName: lastName,
-                email: email,
-                password: password
-            )
-            
-            onFinish?(true)
+            handleRegister()
         }
     }
     
     func didTapSecondaryButton(in view: AuthView) {
         state = (state == .login) ? .register : .login
+    }
+    
+    private func handleLogin(_ button: LoadableButton) {
+        guard
+            let email = mainView.email,
+            let password = mainView.password
+        else {
+            mainView.configureErrorVisibility()
+            return
+        }
+        
+        let request = LoginRequest(email: email, password: password)
+        
+        button.isLoading = true
+        Task { [weak self, manager = authManager, authorizedUserDataFetcher] in
+            defer {
+                button.isLoading = false
+            }
+            
+            do {
+                try await manager.login(with: request)
+                
+                await authorizedUserDataFetcher.fetch()
+                
+                self?.onFinish?(false)
+            } catch {
+                print("ERROR: ", error.localizedDescription)
+            }
+        }
+    }
+    
+    private func handleRegister() {
+        guard
+            let firstName = mainView.firstName,
+            let lastName = mainView.lastName,
+            let email = mainView.email,
+            let password = mainView.password
+        else {
+            mainView.configureErrorVisibility()
+            return
+        }
+        
+        authRegisterProvider.updateMainInfo(
+            firstName: firstName,
+            lastName: lastName,
+            email: email,
+            password: password
+        )
+        
+        onFinish?(true)
     }
 }

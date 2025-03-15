@@ -7,22 +7,27 @@ final class AppCoordinator: Coordinator {
     var children: [Coordinator] = []
     
     @Injected private var onboardingProvider: OnboardingProvider
-    @Injected private var userAuthStatusProvider: UserAuthStatusProvider
+    @Injected private var userProfileProvider: UserProfileProvider
     
     var router: Router
+    private let modulesFactory: AppModulesFactory
     
-    init(router: Router) {
+    init(router: Router, modulesFactory: AppModulesFactory) {
         self.router = router
+        self.modulesFactory = modulesFactory
     }
     
     func start() {
-        if !onboardingProvider.didSee {
-            runOnboardingFlow()
-        } else {
-            userAuthStatusProvider.isAuthenticated
-                ? runTabBarFlow()
-                : runAuthFlow(state: .login)
+        removeAll()
+        presentLaunchScreen()
+    }
+    
+    private func presentLaunchScreen() {
+        let launchScreen = modulesFactory.makeLaunchScreen()
+        launchScreen.onFinish = { [weak self] in
+            self?.handleFlowAfterLaunch()
         }
+        router.setRootModule(launchScreen)
     }
     
     private func runOnboardingFlow() {
@@ -49,5 +54,16 @@ final class AppCoordinator: Coordinator {
         let coordinator = coordinatorsFactory.makeTabBar(with: router)
         addDependency(coordinator)
         coordinator.start()
+    }
+    
+    private func handleFlowAfterLaunch() {
+        removeAll()
+        if !onboardingProvider.didSee {
+            runOnboardingFlow()
+        } else {
+            (userProfileProvider.userProfile == nil)
+                ? runAuthFlow(state: .login)
+                : runTabBarFlow()
+        }
     }
 }
