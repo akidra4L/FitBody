@@ -18,6 +18,17 @@ final class Router: NSObject {
         self.navigationController.delegate = self
     }
     
+    func present(
+        _ module: Presentable,
+        animated: Bool = true,
+        modalPresentationStyle: UIModalPresentationStyle = .automatic,
+        completion: Completion? = nil
+    ) {
+        let controller = module.toPresent()
+        controller.modalPresentationStyle = modalPresentationStyle
+        navigationController.present(controller, animated: animated, completion: completion)
+    }
+    
     func presentFloatingPanel(
         contentModule: Presentable,
         attributes: FloatingPanelAttributes,

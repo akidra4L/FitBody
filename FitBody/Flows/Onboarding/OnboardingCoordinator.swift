@@ -1,4 +1,5 @@
 import UIKit
+import Resolver
 
 // MARK: - OnboardingCoordinatorOutput
 
@@ -13,6 +14,8 @@ final class OnboardingCoordinator: Coordinator, OnboardingCoordinatorOutput {
     
     var children: [Coordinator] = []
     
+    @Injected private var onboardingSeenSetter: OnboardingSeenSetter
+    
     var router: Router
     private let modulesFactory: OnboardingModulesFactory
     
@@ -23,6 +26,8 @@ final class OnboardingCoordinator: Coordinator, OnboardingCoordinatorOutput {
     
     func start() {
         presentOnboarding(with: .trackProgress)
+        
+        onboardingSeenSetter.set()
     }
     
     private func presentOnboarding(with kind: OnboardingKind) {

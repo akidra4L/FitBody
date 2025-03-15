@@ -1,6 +1,22 @@
 import UIKit
 
 enum Illustrations: Sendable {
+    static var authSuccessIllustration: UIImage {
+        UIImage(named: "auth-success-illustration")!
+    }
+    
+    static var goalImproveMobilityIllustration: UIImage {
+        UIImage(named: "goal-improve-mobility-illustration")!
+    }
+    
+    static var goalRecoverFromInjuryIllustration: UIImage {
+        UIImage(named: "goal-recover-from-injury-illustration")!
+    }
+    
+    static var goalStrengthenMusclesIllustration: UIImage {
+        UIImage(named: "goal-strengthen-muscles-illustration")!
+    }
+    
     static var onboardingEatWellIllustration: UIImage {
         UIImage(named: "onboarding-eat-well-illustration")!
     }
@@ -19,5 +35,9 @@ enum Illustrations: Sendable {
     
     static var onboardingTrackProgressIllustration: UIImage {
         UIImage(named: "onboarding-track-progress-illustration")!
+    }
+    
+    static var userProfileSetIllustration: UIImage {
+        UIImage(named: "user-profile-set-illustration")!
     }
 }

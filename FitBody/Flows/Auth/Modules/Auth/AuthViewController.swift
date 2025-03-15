@@ -3,7 +3,7 @@ import UIKit
 // MARK: - AuthViewOutput
 
 protocol AuthViewOutput: AnyObject {
-    var onSuccess: (() -> Void)? { get set }
+    var onFinish: ((_ isRegister: Bool) -> Void)? { get set }
 }
 
 // MARK: - AuthViewController
@@ -11,7 +11,7 @@ protocol AuthViewOutput: AnyObject {
 final class AuthViewController: BaseViewController, AuthViewOutput {
     typealias State = AuthState
     
-    var onSuccess: (() -> Void)?
+    var onFinish: ((Bool) -> Void)?
     
     private lazy var mainView = AuthView(with: state, and: self)
     
@@ -50,7 +50,7 @@ final class AuthViewController: BaseViewController, AuthViewOutput {
 
 extension AuthViewController: AuthViewDelegate {
     func didTapPrimaryButton(in view: AuthView) {
-        
+        onFinish?(state == .register)
     }
     
     func didTapSecondaryButton(in view: AuthView) {

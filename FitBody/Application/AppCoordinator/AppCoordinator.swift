@@ -1,9 +1,13 @@
 import UIKit
+import Resolver
 
 final class AppCoordinator: Coordinator {
     private let coordinatorsFactory = CoordinatorsFactory()
     
     var children: [Coordinator] = []
+    
+    @Injected private var onboardingProvider: OnboardingProvider
+    @Injected private var userAuthStatusProvider: UserAuthStatusProvider
     
     var router: Router
     
@@ -12,7 +16,13 @@ final class AppCoordinator: Coordinator {
     }
     
     func start() {
-        runOnboardingFlow()
+        if !onboardingProvider.didSee {
+            runOnboardingFlow()
+        } else {
+            userAuthStatusProvider.isAuthenticated
+                ? runTabBarFlow()
+                : runAuthFlow(state: .login)
+        }
     }
     
     private func runOnboardingFlow() {
