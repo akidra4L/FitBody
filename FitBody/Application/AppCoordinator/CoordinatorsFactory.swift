@@ -30,4 +30,29 @@ final class CoordinatorsFactory {
             coordinatorsFactory: CoordinatorsFactory()
         )
     }
+    
+    func makeHome(with router: Router) -> Coordinator {
+        HomeCoordinator(
+            router: router,
+            modulesFactory: ModulesFactory()
+        )
+    }
+    
+    func makeSearch(with router: Router) -> Coordinator {
+        SearchCoordinator(
+            router: router,
+            modulesFactory: ModulesFactory()
+        )
+    }
+    
+    func makeStartupScenario(
+        with router: Router,
+        and launchInstruction: StartupScenarioLaunchInstruction
+    ) -> Coordinator & StartupScenarioCoordinatorOutput {
+        StartupScenarioCoordinator(
+            router: router,
+            launchInstruction: launchInstruction,
+            modulesFactory: ModulesFactory()
+        )
+    }
 }

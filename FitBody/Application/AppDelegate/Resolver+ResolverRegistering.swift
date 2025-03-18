@@ -11,6 +11,7 @@ extension Resolver: ResolverRegistering {
         registerAuthServices()
         registerAuthorizedUserDataFetch()
         registerOnboardingServices()
+        registerStartupScenarioServices()
         registerUserServices()
     }
 }
