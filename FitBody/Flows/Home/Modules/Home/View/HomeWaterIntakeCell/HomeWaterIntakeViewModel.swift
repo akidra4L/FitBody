@@ -1,11 +1,19 @@
-import Foundation
+import Resolver
 
 struct HomeWaterIntakeViewModel: Sendable {
     var title: String {
-        "Today Target"
+        (waterIntakeProvider.target == nil)
+            ? "Set your water intake target"
+            : "Today target"
     }
     
     var waterIntakeText: String {
-        "2L"
+        guard let target = waterIntakeProvider.target else {
+            return "--"
+        }
+
+        return "\(target)"
     }
+    
+    private let waterIntakeProvider = Resolver.resolve(WaterIntakeProvider.self)
 }

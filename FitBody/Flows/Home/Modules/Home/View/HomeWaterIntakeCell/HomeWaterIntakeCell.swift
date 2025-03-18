@@ -51,7 +51,7 @@ final class HomeWaterIntakeCell: UITableViewCell {
             make.trailing.equalTo(iconImageView.snp.leading).offset(-8)
         }
         iconImageView.snp.makeConstraints { make in
-            make.top.equalToSuperview().offset(16)
+            make.centerY.equalTo(titleLabel)
             make.trailing.equalToSuperview().offset(-20)
             make.size.equalTo(24)
         }
@@ -70,7 +70,7 @@ final class HomeWaterIntakeCell: UITableViewCell {
             iconImageView,
             waterView
         ].forEach { view.addSubview($0) }
-        view.backgroundColor = UIColor(hex: "#9DCEFF")?.withAlphaComponent(0.5)
+        view.backgroundColor = UIColor(hex: "#9DCEFF")?.withAlphaComponent(0.9)
         view.clipsToBounds = true
         view.layer.cornerRadius = 20
         return view
@@ -79,7 +79,7 @@ final class HomeWaterIntakeCell: UITableViewCell {
     private func makeTitleLabel() -> UILabel {
         let label = UILabel(with: Fonts.title4)
         label.numberOfLines = 2
-        label.textColor = Colors.textPrimary
+        label.textColor = Colors.fillInput
         return label
     }
 }
