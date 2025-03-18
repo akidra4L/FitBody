@@ -1,5 +1,6 @@
 import UIKit
 import SnapKit
+import Resolver
 
 // MARK: - HomeViewOutput
 
@@ -8,6 +9,7 @@ protocol HomeViewOutput: AnyObject {}
 // MARK: - HomeViewController
 
 final class HomeViewController: BaseViewController, HomeViewOutput {
+    private var parameters = HomeParameters()
     private var sections: [HomeSection] = [] {
         didSet {
             guard oldValue != sections else {
@@ -27,6 +29,8 @@ final class HomeViewController: BaseViewController, HomeViewOutput {
     
     private lazy var dataSourceImpl = HomeTableViewDataSourceImpl()
     private lazy var delegateImpl = HomeTableViewDelegateImpl()
+    
+    @Injected private var homeDoctorsProvider: HomeDoctorsProvider
     
     override func loadView() {
         view = tableView
@@ -59,11 +63,21 @@ final class HomeViewController: BaseViewController, HomeViewOutput {
     }
     
     private func setupRequiredData() async {
+        async let doctors: Void = getDoctors()
         
+        await doctors
+    }
+    
+    private func getDoctors() async {
+        do {
+            parameters.doctors = try await homeDoctorsProvider.get()
+        } catch {
+            print("ERROR: ", error.localizedDescription)
+        }
     }
     
     private func configureSections() {
-        sections = HomeSectionsFactory().make()
+        sections = HomeSectionsFactory().make(with: parameters)
     }
     
     private func setupTableViewDelegateImpl() {

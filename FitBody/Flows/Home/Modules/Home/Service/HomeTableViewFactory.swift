@@ -13,9 +13,11 @@ final class HomeTableViewFactory {
         tableView.delegate = delegate
         tableView.estimatedSectionFooterHeight = 0
         tableView.estimatedSectionHeaderHeight = 32
+        tableView.register(aClass: HomeSectionHeaderView.self)
         [
             HomeBookDoctorCell.self,
-            HomeWaterIntakeCell.self
+            HomeWaterIntakeCell.self,
+            HomeDoctorsCell.self
         ].forEach { tableView.register(cellClass: $0) }
         tableView.separatorStyle = .none
         tableView.sectionFooterHeight = 0

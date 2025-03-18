@@ -7,13 +7,19 @@ final class HomeTableViewDelegateImpl: NSObject {
     
     var bookDoctorDidSelect: (() -> Void)?
     var waterIntakeDidSelect: (() -> Void)?
+    var doctorDidSelect: ((HomeDoctorListItem.ID) -> Void)?
 }
 
 // MARK: - UITableViewDelegate
 
 extension HomeTableViewDelegateImpl: UITableViewDelegate {
     func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
-        return
+        switch cell {
+        case let cell as HomeDoctorsCell:
+            cell.delegate = self
+        default:
+            return
+        }
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
@@ -24,6 +30,8 @@ extension HomeTableViewDelegateImpl: UITableViewDelegate {
             bookDoctorDidSelect?()
         case .waterIntake:
             waterIntakeDidSelect?()
+        case .doctors:
+            return
         }
     }
     
@@ -36,11 +44,22 @@ extension HomeTableViewDelegateImpl: UITableViewDelegate {
     }
     
     func tableView(_ tableView: UITableView, willDisplayHeaderView view: UIView, forSection section: Int) {
-        return
+        guard let view = view as? HomeSectionHeaderView else {
+            return
+        }
+        
+        switch sections[section].kind {
+        case .doctors:
+            view.configure(with: "Doctors in FitBody")
+        default:
+            return
+        }
     }
     
     func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
         switch sections[section].kind {
+        case .doctors:
+            tableView.dequeueReusableHeaderFooterView(HomeSectionHeaderView.self)
         case .bookDoctor, .waterIntake:
             nil
         }
@@ -60,13 +79,30 @@ extension HomeTableViewDelegateImpl: UITableViewDelegate {
             UITableView.automaticDimension
         case .waterIntake:
             isEstimated ? 140 : UITableView.automaticDimension
+        case .doctors:
+            doctorItemHeight()
         }
     }
     
     private func heightForHeaderInSection(_ tableView: UITableView, in section: Int) -> CGFloat {
         switch sections[section].kind {
+        case .doctors:
+            40
         case .bookDoctor, .waterIntake:
             .leastNormalMagnitude
         }
+    }
+    
+    private func doctorItemHeight() -> CGFloat {
+        let collectionViewHeight = HomeDoctorsCell.getHeight()
+        return collectionViewHeight + 8 + 24
+    }
+}
+
+// MARK: - HomeDoctorsCellDelegate
+
+extension HomeTableViewDelegateImpl: HomeDoctorsCellDelegate {
+    func homeDoctorsCell(_ cell: HomeDoctorsCell, didSelectDoctor doctor: HomeDoctorListItem) {
+        doctorDidSelect?(doctor.id)
     }
 }

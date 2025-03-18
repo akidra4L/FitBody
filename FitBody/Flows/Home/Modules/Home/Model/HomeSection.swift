@@ -13,6 +13,7 @@ extension HomeSection {
     enum Kind: Equatable, Sendable {
         case bookDoctor
         case waterIntake
+        case doctors
     }
 }
 
@@ -22,5 +23,6 @@ extension HomeSection {
     enum Row: Equatable, Sendable {
         case bookDoctor
         case waterIntake
+        case doctors([HomeDoctorListItem])
     }
 }
