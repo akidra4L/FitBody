@@ -69,7 +69,7 @@ final class HomeBookDoctorCell: UITableViewCell {
         ].forEach { view.addSubview($0) }
         view.backgroundColor = Colors.fillPrimary.withAlphaComponent(0.7)
         view.clipsToBounds = true
-        view.layer.cornerRadius = 20
+        view.layer.cornerRadius = 12
         return view
     }
     

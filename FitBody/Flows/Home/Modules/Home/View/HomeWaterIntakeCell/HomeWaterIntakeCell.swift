@@ -72,7 +72,7 @@ final class HomeWaterIntakeCell: UITableViewCell {
         ].forEach { view.addSubview($0) }
         view.backgroundColor = UIColor(hex: "#9DCEFF")?.withAlphaComponent(0.9)
         view.clipsToBounds = true
-        view.layer.cornerRadius = 20
+        view.layer.cornerRadius = 12
         return view
     }
     

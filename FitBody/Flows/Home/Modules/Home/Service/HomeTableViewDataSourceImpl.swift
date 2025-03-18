@@ -25,6 +25,10 @@ extension HomeTableViewDataSourceImpl: UITableViewDataSource {
             let cell: HomeWaterIntakeCell = tableView.dequeueReusableCell(for: indexPath)
             cell.configure(with: HomeWaterIntakeViewModel())
             return cell
+        case let .doctors(doctors):
+            let cell: HomeDoctorsCell = tableView.dequeueReusableCell(for: indexPath)
+            cell.configure(with: doctors)
+            return cell
         }
     }
 }

@@ -1,10 +1,19 @@
 import Foundation
 
 final class HomeSectionsFactory {
-    func make() -> [HomeSection] {
+    func make(with parameters: HomeParameters) -> [HomeSection] {
         [
             HomeSection(kind: .bookDoctor, rows: [.bookDoctor]),
-            HomeSection(kind: .waterIntake, rows: [.waterIntake])
-        ]
+            HomeSection(kind: .waterIntake, rows: [.waterIntake]),
+            makeDoctorsSection(from: parameters.doctors)
+        ].compactMap { $0 }
+    }
+    
+    private func makeDoctorsSection(from doctors: [HomeDoctorListItem]) -> HomeSection? {
+        guard !doctors.isEmpty else {
+            return nil
+        }
+        
+        return HomeSection(kind: .doctors, rows: [.doctors(doctors)])
     }
 }
