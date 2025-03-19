@@ -8,17 +8,18 @@ final class CoordinatorsFactory {
         )
     }
     
-    func makeOnboarding(with router: Router) -> Coordinator & OnboardingCoordinatorOutput {
-        OnboardingCoordinator(
+    func makeAuth(with router: Router, state: AuthState) -> Coordinator & AuthCoordinatorOutput {
+        AuthCoordinator(
             router: router,
+            state: state,
             modulesFactory: ModulesFactory()
         )
     }
     
-    func makeAuth(with router: Router, state: AuthState) -> Coordinator & AuthCoordinator {
-        AuthCoordinator(
+    func makeDoctor(with router: Router, id: Doctor.ID) -> Coordinator & DoctorCoordinatorOutput {
+        DoctorCoordinator(
             router: router,
-            state: state,
+            id: id,
             modulesFactory: ModulesFactory()
         )
     }
@@ -33,6 +34,14 @@ final class CoordinatorsFactory {
     
     func makeHome(with router: Router) -> Coordinator {
         HomeCoordinator(
+            router: router,
+            modulesFactory: ModulesFactory(),
+            coordinatorsFactory: CoordinatorsFactory()
+        )
+    }
+    
+    func makeOnboarding(with router: Router) -> Coordinator & OnboardingCoordinatorOutput {
+        OnboardingCoordinator(
             router: router,
             modulesFactory: ModulesFactory()
         )

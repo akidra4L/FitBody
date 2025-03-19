@@ -4,11 +4,15 @@ import Resolver
 
 // MARK: - HomeViewOutput
 
-protocol HomeViewOutput: AnyObject {}
+protocol HomeViewOutput: AnyObject {
+    var doctorDidSelect: ((Doctor.ID) -> Void)? { get set }
+}
 
 // MARK: - HomeViewController
 
 final class HomeViewController: BaseViewController, HomeViewOutput {
+    var doctorDidSelect: ((Doctor.ID) -> Void)?
+    
     private var parameters = HomeParameters()
     private var sections: [HomeSection] = [] {
         didSet {
@@ -83,6 +87,9 @@ final class HomeViewController: BaseViewController, HomeViewOutput {
     private func setupTableViewDelegateImpl() {
         delegateImpl.bookDoctorDidSelect = { [weak self] in
             self?.handleBookDoctorSelect()
+        }
+        delegateImpl.doctorDidSelect = { [weak self] id in
+            self?.doctorDidSelect?(id)
         }
     }
     

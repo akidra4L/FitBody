@@ -2,8 +2,8 @@ import UIKit
 import SnapKit
 
 final class RatingView: UIStackView {
-    private lazy var titleLabel = makeTitleLabel()
     private lazy var iconImageView = makeIconImageView()
+    private lazy var titleLabel = makeTitleLabel()
 
     public init() {
         super.init(frame: .zero)
@@ -21,7 +21,7 @@ final class RatingView: UIStackView {
     }
 
     private func setup() {
-        [titleLabel, iconImageView].forEach { addArrangedSubview($0) }
+        [iconImageView, titleLabel].forEach { addArrangedSubview($0) }
         alignment = .center
         spacing = 4
 
@@ -30,8 +30,14 @@ final class RatingView: UIStackView {
 
     private func setupConstraints() {
         iconImageView.snp.makeConstraints { make in
-            make.size.equalTo(12)
+            make.size.equalTo(16)
         }
+    }
+    
+    private func makeIconImageView() -> UIImageView {
+        let imageView = UIImageView(image: UIImage(systemName: "star.fill"))
+        imageView.tintColor = UIColor(hex: "#FFD33C")
+        return imageView
     }
 
     private func makeTitleLabel() -> UILabel {
@@ -40,11 +46,5 @@ final class RatingView: UIStackView {
         label.setContentHuggingPriority(.required, for: .horizontal)
         label.textColor = Colors.textPrimary
         return label
-    }
-    
-    private func makeIconImageView() -> UIImageView {
-        let imageView = UIImageView(image: UIImage(systemName: "star.fill"))
-        imageView.tintColor = UIColor(hex: "#FFD33C")
-        return imageView
     }
 }

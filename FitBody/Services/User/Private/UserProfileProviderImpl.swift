@@ -19,7 +19,7 @@ extension UserProfileProviderImpl: UserProfileProvider {
     
     // TODO: - add relative path
     func get() async throws -> UserProfile {
-        try await Task.sleep(nanoseconds: 1_000_000_000)
+        try await Task.sleep(nanoseconds: 500_000_000)
         
         let userProfile = UserProfile(
             firstName: "Alikhan",

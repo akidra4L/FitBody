@@ -7,7 +7,7 @@ final class HomeTableViewDelegateImpl: NSObject {
     
     var bookDoctorDidSelect: (() -> Void)?
     var waterIntakeDidSelect: (() -> Void)?
-    var doctorDidSelect: ((HomeDoctorListItem.ID) -> Void)?
+    var doctorDidSelect: ((Doctor.ID) -> Void)?
 }
 
 // MARK: - UITableViewDelegate

@@ -15,13 +15,16 @@ final class HomeCoordinator: Coordinator, HomeCoordinatorOutput {
     
     var router: Router
     private let modulesFactory: HomeModulesFactory
+    private let coordinatorsFactory: CoordinatorsFactory
     
     init(
         router: Router,
-        modulesFactory: HomeModulesFactory
+        modulesFactory: HomeModulesFactory,
+        coordinatorsFactory: CoordinatorsFactory
     ) {
         self.router = router
         self.modulesFactory = modulesFactory
+        self.coordinatorsFactory = coordinatorsFactory
     }
     
     func start() {
@@ -30,6 +33,18 @@ final class HomeCoordinator: Coordinator, HomeCoordinatorOutput {
     
     private func presentHome() {
         let home = modulesFactory.makeHome()
+        home.doctorDidSelect = { [weak self] id in
+            self?.runDoctorFlow(with: id)
+        }
         router.setRootModule(home, animated: false)
+    }
+    
+    private func runDoctorFlow(with id: Doctor.ID) {
+        let coordinator = coordinatorsFactory.makeDoctor(with: router, id: id)
+        coordinator.onFinish = { [weak self, weak coordinator] in
+            self?.removeDependency(coordinator)
+        }
+        addDependency(coordinator)
+        coordinator.start()
     }
 }
