@@ -3,12 +3,16 @@ import Resolver
 
 // MARK: - DoctorViewOutput
 
-protocol DoctorViewOutput: AnyObject {}
+protocol DoctorViewOutput: AnyObject {
+    var showMoreReviewsDidTap: (([String]) -> Void)? { get set }
+}
 
 // MARK: - DoctorViewController
 
 final class DoctorViewController: BaseViewController, DoctorViewOutput {
     typealias ID = Doctor.ID
+    
+    var showMoreReviewsDidTap: (([String]) -> Void)?
     
     private var doctor: Doctor?
     private var sections: [DoctorSection] = [] {
@@ -48,6 +52,7 @@ final class DoctorViewController: BaseViewController, DoctorViewOutput {
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        setupDelegateImpl()
         getDoctor()
     }
     
@@ -94,8 +99,48 @@ final class DoctorViewController: BaseViewController, DoctorViewOutput {
         
         sections = DoctorSectionsFactory().make(from: doctor)
     }
+    
+    private func setupDelegateImpl() {
+        delegateImpl.showMoreReviewsDidTap = { [weak self] in
+            self?.handleShowReviewsTap()
+        }
+        delegateImpl.readAllDidTap = { [weak self] cell in
+            self?.handleReadAllTap(in: cell)
+        }
+    }
+    
+    private func handleShowReviewsTap() {
+        guard let reviews = doctor?.reviews else {
+            assertionFailure()
+            return
+        }
+        
+        showMoreReviewsDidTap?(reviews)
+    }
+    
+    private func handleReadAllTap(in cell: UITableViewCell) {
+        guard let indexPath = mainView.tableView.indexPath(for: cell) else {
+            assertionFailure()
+            return
+        }
+        
+        mainView.tableView.performBatchUpdates { [weak self] in
+            guard let self else {
+                assertionFailure()
+                return
+            }
+            
+            dataSourceImpl.aboutState.toggle()
+            if case .default = dataSourceImpl.aboutState {
+                mainView.tableView.scrollToRow(at: indexPath, at: .none, animated: false)
+            }
+            mainView.tableView.reloadRows(at: [indexPath], with: .automatic)
+        }
+    }
 }
 
 // MARK: - DoctorViewDelegate
 
-extension DoctorViewController: DoctorViewDelegate {}
+extension DoctorViewController: DoctorViewDelegate {
+    func didTapActionButton(in view: DoctorView) {}
+}

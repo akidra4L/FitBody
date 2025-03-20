@@ -16,7 +16,9 @@ final class DoctorTableViewFactory {
         tableView.estimatedSectionHeaderHeight = 40
         tableView.register(aClass: DoctorSectionHeaderView.self)
         [
-            DoctorAboutMeCell.self
+            DoctorAboutCell.self,
+            DoctorReviewsCell.self,
+            DoctorTopCell.self,
         ].forEach { tableView.register(cellClass: $0) }
         tableView.separatorStyle = .none
         tableView.sectionFooterHeight = 0

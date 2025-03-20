@@ -65,7 +65,7 @@ open class BaseButton: UIButton, LoadableButton {
             return
         }
 
-        configuration?.image = newValue ? UIImage(systemName: "chevron.right") : nil
+        configuration?.image = newValue ? Icons.chevron8x16 : nil
         configuration?.imagePlacement = newValue ? .trailing : .leading
     }
 

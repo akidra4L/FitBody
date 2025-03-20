@@ -35,8 +35,16 @@ final class DoctorCoordinator: Coordinator, DoctorCoordinatorOutput {
     
     private func presentDoctor(with id: Doctor.ID) {
         let doctor = modulesFactory.makeDoctor(with: id)
+        doctor.showMoreReviewsDidTap = { [weak self] reviews in
+            self?.presentDoctorReview(with: reviews)
+        }
         router.push(doctor) { [onFinish] in
             onFinish?()
         }
+    }
+    
+    private func presentDoctorReview(with reviews: [String]) {
+        let doctorReview = modulesFactory.makeDoctorReview(with: reviews)
+        router.push(doctorReview)
     }
 }

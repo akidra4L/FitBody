@@ -12,6 +12,8 @@ struct DoctorSection: Equatable, Sendable {
 extension DoctorSection {
     enum Kind: Equatable, Sendable {
         case aboutMe
+        case top
+        case review(_ count: Int)
     }
 }
 
@@ -20,5 +22,7 @@ extension DoctorSection {
 extension DoctorSection {
     enum Row: Equatable, Sendable {
         case aboutMe(String)
+        case top(Doctor)
+        case review([String])
     }
 }

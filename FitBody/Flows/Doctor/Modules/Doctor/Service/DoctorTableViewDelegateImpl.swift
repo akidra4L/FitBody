@@ -4,11 +4,23 @@ import UIKit
 
 final class DoctorTableViewDelegateImpl: NSObject {
     var sections: [DoctorSection] = []
+    
+    var showMoreReviewsDidTap: (() -> Void)?
+    var readAllDidTap: ((_ cell: UITableViewCell) -> Void)?
 }
 
 // MARK: - UITableViewDelegate
 
 extension DoctorTableViewDelegateImpl: UITableViewDelegate {
+    func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
+        switch cell {
+        case let cell as DoctorAboutCell:
+            cell.delegate = self
+        default:
+            return
+        }
+    }
+    
     func tableView(_ tableView: UITableView, estimatedHeightForRowAt indexPath: IndexPath) -> CGFloat {
         heightForRowAt(tableView, indexPath: indexPath, isEstimated: true)
     }
@@ -22,16 +34,18 @@ extension DoctorTableViewDelegateImpl: UITableViewDelegate {
             return
         }
         
-        switch sections[section].kind {
-        case .aboutMe:
-            view.configure(with: "About me")
-        }
+        view.configure(
+            with: DoctorSectionHeaderViewModel(with: sections[section].kind)
+        )
+        view.delegate = self
     }
     
     func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
         switch sections[section].kind {
-        case .aboutMe:
+        case .aboutMe, .review:
             tableView.dequeueReusableHeaderFooterView(DoctorSectionHeaderView.self)
+        case .top:
+            nil
         }
     }
     
@@ -47,13 +61,35 @@ extension DoctorTableViewDelegateImpl: UITableViewDelegate {
         switch sections[indexPath.section].kind {
         case .aboutMe:
             UITableView.automaticDimension
+        case .top:
+            isEstimated ? 108 : UITableView.automaticDimension
+        case .review:
+            UITableView.automaticDimension
         }
     }
     
     private func heightForHeaderInSection(_ tableView: UITableView, in section: Int) -> CGFloat {
         switch sections[section].kind {
-        case .aboutMe:
+        case .aboutMe, .review:
             40
+        case .top:
+            .leastNormalMagnitude
         }
+    }
+}
+
+// MARK: - DoctorSectionHeaderViewDelegate
+
+extension DoctorTableViewDelegateImpl: DoctorSectionHeaderViewDelegate {
+    func didTapActionButton(in view: DoctorSectionHeaderView) {
+        showMoreReviewsDidTap?()
+    }
+}
+
+// MARK: - DoctorAboutMeCellDelegate
+
+extension DoctorTableViewDelegateImpl: DoctorAboutCellDelegate {
+    func didTapActionButton(in cell: DoctorAboutCell) {
+        readAllDidTap?(cell)
     }
 }

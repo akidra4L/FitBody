@@ -3,7 +3,9 @@ import SnapKit
 
 // MARK: - DoctorViewDelegate
 
-protocol DoctorViewDelegate: AnyObject {}
+protocol DoctorViewDelegate: AnyObject {
+    func didTapActionButton(in view: DoctorView)
+}
 
 // MARK: - DoctorView
 
@@ -17,6 +19,7 @@ final class DoctorView: UIView {
         and: delegateImpl,
         tableHeaderView: tableHeaderView
     )
+    private lazy var actionButton = makeActionButton()
     
     private let dataSourceImpl: DoctorTableViewDataSourceImpl
     private let delegateImpl: DoctorTableViewDelegateImpl
@@ -40,6 +43,11 @@ final class DoctorView: UIView {
         nil
     }
     
+    @objc
+    private func actionButtonDidTap() {
+        delegate?.didTapActionButton(in: self)
+    }
+    
     func configure(with doctor: Doctor) {
         tableHeaderView.configure(with: DoctorTableHeaderViewModel(with: doctor))
     }
@@ -50,7 +58,7 @@ final class DoctorView: UIView {
     }
     
     private func setup() {
-        [activityIndicatorView, tableView].forEach { addSubview($0) }
+        [activityIndicatorView, tableView, actionButton].forEach { addSubview($0) }
         backgroundColor = Colors.fillBackgroundPrimary
         
         setupConstraints()
@@ -61,9 +69,21 @@ final class DoctorView: UIView {
             make.center.equalToSuperview()
         }
         tableView.snp.makeConstraints { make in
-            make.top.equalTo(safeAreaLayoutGuide).offset(12)
+            make.top.equalToSuperview()
             make.directionalHorizontalEdges.equalToSuperview()
-            make.bottom.equalToSuperview()
+            make.bottom.equalTo(actionButton.snp.top).offset(-12)
         }
+        actionButton.snp.makeConstraints { make in
+            make.directionalHorizontalEdges.equalToSuperview().inset(16)
+            make.bottom.equalTo(safeAreaLayoutGuide).offset(-12)
+        }
+    }
+    
+    private func makeActionButton() -> UIButton {
+        let button = PrimaryButton(size: .largeFixed)
+        button.addTarget(self, action: #selector(actionButtonDidTap), for: .touchUpInside)
+        button.setImage(Icons.phone20x20)
+        button.setTitle("Call", for: .normal)
+        return button
     }
 }

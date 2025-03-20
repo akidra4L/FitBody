@@ -7,14 +7,12 @@ final class DoctorTableHeaderView: UIView {
     private lazy var illustrationImageView = makeIllustrationImageView()
     private lazy var titleLabel = makeTitleLabel()
     private lazy var subtitleLabel = makeSubtitleLabel()
-    private lazy var ratingView = RatingView()
-    private lazy var reviewLabel = makeReviewLabel()
     
     override init(frame: CGRect) {
         super.init(
             frame: CGRect(
                 origin: .zero,
-                size: CGSize(width: .zero, height: 360)
+                size: CGSize(width: .zero, height: 344)
             )
         )
         
@@ -30,8 +28,6 @@ final class DoctorTableHeaderView: UIView {
         illustrationImageView.kf.setImage(with: viewModel.illustration)
         titleLabel.text = viewModel.title
         subtitleLabel.text = viewModel.subtitle
-        ratingView.configure(with: viewModel.ratingViewModel)
-        reviewLabel.text = viewModel.reviewText
         
         layoutIfNeeded()
     }
@@ -61,16 +57,7 @@ final class DoctorTableHeaderView: UIView {
         subtitleLabel.snp.makeConstraints { make in
             make.top.equalTo(titleLabel.snp.bottom).offset(4)
             make.directionalHorizontalEdges.equalToSuperview().inset(12)
-        }
-        ratingView.snp.makeConstraints { make in
-            make.top.equalTo(subtitleLabel.snp.bottom).offset(8)
-            make.leading.equalToSuperview().offset(12)
             make.bottom.equalToSuperview().offset(-12)
-        }
-        reviewLabel.snp.makeConstraints { make in
-            make.centerY.equalTo(ratingView)
-            make.leading.equalTo(ratingView.snp.trailing).offset(4)
-            make.trailing.equalToSuperview().offset(-12)
         }
     }
     
@@ -79,9 +66,7 @@ final class DoctorTableHeaderView: UIView {
         [
             illustrationImageView,
             titleLabel,
-            subtitleLabel,
-            ratingView,
-            reviewLabel
+            subtitleLabel
         ].forEach { view.addSubview($0) }
         view.backgroundColor = Colors.fillBackgroundSecondary
         view.clipsToBounds = true
@@ -112,12 +97,6 @@ final class DoctorTableHeaderView: UIView {
     private func makeSubtitleLabel() -> UILabel {
         let label = UILabel(with: Fonts.body3)
         label.textColor = Colors.textSecondary
-        return label
-    }
-    
-    private func makeReviewLabel() -> UILabel {
-        let label = UILabel(with: Fonts.title6)
-        label.textColor = Colors.textPrimary
         return label
     }
 }
