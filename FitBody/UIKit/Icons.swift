@@ -53,3 +53,11 @@ extension Icons {
         UIImage(named: "water-glass-25x34")!
     }
 }
+
+// MARK: - 32
+
+extension Icons {
+    static var pin32x32: UIImage {
+        UIImage(named: "pin-32x32")!
+    }
+}

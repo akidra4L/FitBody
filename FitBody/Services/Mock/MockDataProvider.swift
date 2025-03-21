@@ -11,6 +11,7 @@ final class MockDataProvider {
             illustration: URL(string: "https://doq.kz/media/doctors/7988/dorofeev-aleksandr.jpeg")!,
             rating: 9.66,
             hospital: Doctor.Hospital(
+                id: 1,
                 name: "Expert Neuro",
                 address: Address(
                     name: "Auezov St 67",
@@ -47,6 +48,7 @@ final class MockDataProvider {
             illustration: URL(string: "https://idoctor.kz/images/doctors/1227001/1227413/gwvhI0lfs40SUr5HzgTOMPKcJpVQk5bmh8e2EEhH_300x300.png")!,
             rating: 9.6,
             hospital: Doctor.Hospital(
+                id: 2,
                 name: "Atlant Clinic",
                 address: Address(
                     name: "Koktem-2, 2",
@@ -91,6 +93,7 @@ final class MockDataProvider {
             illustration: URL(string: "https://ms1.103.kz/images/f11f6f0850c8b35500e82bc656655bad/thumb/point=top-center,w=416,h=416,q=34,watermark=false/catalog_staff_photo/68/1f/e5/681fe5e458ad519ad3c2b6a6c23ae7d8.jpg")!,
             rating: 9.2,
             hospital: Doctor.Hospital(
+                id: 1,
                 name: "Expert Neuro",
                 address: Address(
                     name: "Auezov St 67",
@@ -120,6 +123,7 @@ final class MockDataProvider {
             illustration: URL(string: "https://expertneuro.kz/wp-content/uploads/2022/12/548A8969.jpg")!,
             rating: 8.9,
             hospital: Doctor.Hospital(
+                id: 1,
                 name: "Expert Neuro",
                 address: Address(
                     name: "Auezov St 67",
@@ -149,6 +153,7 @@ final class MockDataProvider {
             illustration: URL(string: "https://idoctor.kz/images/doctors/7001/6879/CQ0MkGZiKV3ggz5L2jbBxbcqTkP2By41Lipcmayi_300x300.png")!,
             rating: 9.8,
             hospital: Doctor.Hospital(
+                id: 3,
                 name: "Mediker Hospital International",
                 address: Address(
                     name: "Auezov St 67",
@@ -164,5 +169,35 @@ final class MockDataProvider {
                 "Очень приятная профессиональная"
             ]
         ),
+    ]
+    
+    static var hospitals: [Hospital] = [
+        Hospital(
+            id: 1,
+            name: "Expert Neuro",
+            address: Address(
+                name: "Auezov St 67",
+                latitude: 43.2436367,
+                longitude: 76.9030064
+            )
+        ),
+        Hospital(
+            id: 2,
+            name: "Atlant Clinic",
+            address: Address(
+                name: "Koktem-2, 2",
+                latitude: 43.2273347,
+                longitude: 76.919722
+            )
+        ),
+        Hospital(
+            id: 3,
+            name: "Mediker Hospital International",
+            address: Address(
+                name: "Auezov St 67",
+                latitude: 43.215356,
+                longitude: 76.9521789
+            )
+        )
     ]
 }

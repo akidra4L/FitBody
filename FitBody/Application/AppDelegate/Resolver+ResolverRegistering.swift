@@ -14,6 +14,7 @@ extension Resolver: ResolverRegistering {
         registerHomeServices()
         registerHospitalServices()
         registerOnboardingServices()
+        registerSearchServices()
         registerStartupScenarioServices()
         registerUserServices()
     }
