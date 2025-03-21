@@ -6,6 +6,7 @@ final class DoctorCell: UICollectionViewCell {
     private lazy var imageView = makeImageView()
     private lazy var titleLabel = makeTitleLabel()
     private lazy var ratingView = RatingView()
+    private lazy var addressView = AddressView()
     
     override var isHighlighted: Bool {
         didSet {
@@ -34,10 +35,16 @@ final class DoctorCell: UICollectionViewCell {
         imageView.kf.setImage(with: viewModel.illustration)
         titleLabel.text = viewModel.title
         ratingView.configure(with: viewModel.ratingViewModel)
+        addressView.configure(with: viewModel.address)
     }
     
     private func setup() {
-        [imageView, titleLabel, ratingView].forEach { contentView.addSubview($0) }
+        [
+            imageView,
+            titleLabel,
+            ratingView,
+            addressView
+        ].forEach { contentView.addSubview($0) }
         
         setupConstraints()
     }
@@ -55,6 +62,10 @@ final class DoctorCell: UICollectionViewCell {
         ratingView.snp.makeConstraints { make in
             make.top.equalTo(titleLabel.snp.bottom).offset(4)
             make.leading.equalToSuperview()
+        }
+        addressView.snp.makeConstraints { make in
+            make.top.equalTo(ratingView.snp.bottom).offset(8)
+            make.directionalHorizontalEdges.equalToSuperview()
             make.bottom.equalToSuperview()
         }
     }

@@ -5,6 +5,10 @@ enum Icons: Sendable {}
 // MARK: - 16
 
 extension Icons {
+    static var address16x16: UIImage {
+        UIImage(named: "address-16x16")!
+    }
+    
     static var chevron8x16: UIImage {
         UIImage(named: "chevron-8x16")!
     }

@@ -7,4 +7,5 @@ struct HomeDoctorListItem: Decodable, Equatable, Sendable {
     let lastName: String
     let rating: Doctor.Rating?
     let illustration: URL
+    let address: String
 }

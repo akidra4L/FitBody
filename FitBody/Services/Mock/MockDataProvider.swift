@@ -1,4 +1,5 @@
 import Foundation
+import CoreLocation
 
 final class MockDataProvider {
     static var doctors: [Doctor] = [
@@ -9,7 +10,14 @@ final class MockDataProvider {
             lastName: "Dorofeev",
             illustration: URL(string: "https://doq.kz/media/doctors/7988/dorofeev-aleksandr.jpeg")!,
             rating: 9.66,
-            hospital: "Expert Neuro",
+            hospital: Doctor.Hospital(
+                name: "Expert Neuro",
+                address: Address(
+                    name: "Auezov St 67",
+                    latitude: 43.2436367,
+                    longitude: 76.9030064
+                )
+            ),
             yearsExpert: 17,
             description: """
             Опыт работы в реабилитологии и восстановительной медицине более 15 лет.\n
@@ -38,7 +46,14 @@ final class MockDataProvider {
             lastName: "Ushurova",
             illustration: URL(string: "https://idoctor.kz/images/doctors/1227001/1227413/gwvhI0lfs40SUr5HzgTOMPKcJpVQk5bmh8e2EEhH_300x300.png")!,
             rating: 9.6,
-            hospital: "Atlant Clinic",
+            hospital: Doctor.Hospital(
+                name: "Atlant Clinic",
+                address: Address(
+                    name: "Koktem-2, 2",
+                    latitude: 43.2273347,
+                    longitude: 76.919722
+                )
+            ),
             yearsExpert: 6,
             description: """
             Лечение заболеваний, проводимые процедуры:
@@ -75,7 +90,14 @@ final class MockDataProvider {
             lastName: "Mukashev",
             illustration: URL(string: "https://ms1.103.kz/images/f11f6f0850c8b35500e82bc656655bad/thumb/point=top-center,w=416,h=416,q=34,watermark=false/catalog_staff_photo/68/1f/e5/681fe5e458ad519ad3c2b6a6c23ae7d8.jpg")!,
             rating: 9.2,
-            hospital: "Expert Neuro",
+            hospital: Doctor.Hospital(
+                name: "Expert Neuro",
+                address: Address(
+                    name: "Auezov St 67",
+                    latitude: 43.2436367,
+                    longitude: 76.9030064
+                )
+            ),
             yearsExpert: 8,
             description: """
             Специализируюсь на заболеваниях опорно-двигательного аппарата:
@@ -97,7 +119,14 @@ final class MockDataProvider {
             lastName: "Akhmetov",
             illustration: URL(string: "https://expertneuro.kz/wp-content/uploads/2022/12/548A8969.jpg")!,
             rating: 8.9,
-            hospital: "Expert Neuro",
+            hospital: Doctor.Hospital(
+                name: "Expert Neuro",
+                address: Address(
+                    name: "Auezov St 67",
+                    latitude: 43.2436367,
+                    longitude: 76.9030064
+                )
+            ),
             yearsExpert: 10,
             description: """
             Специализируюсь на:
@@ -119,7 +148,14 @@ final class MockDataProvider {
             lastName: "Prokaeva",
             illustration: URL(string: "https://idoctor.kz/images/doctors/7001/6879/CQ0MkGZiKV3ggz5L2jbBxbcqTkP2By41Lipcmayi_300x300.png")!,
             rating: 9.8,
-            hospital: "Mediker International Hospital",
+            hospital: Doctor.Hospital(
+                name: "Mediker Hospital International",
+                address: Address(
+                    name: "Auezov St 67",
+                    latitude: 43.215356,
+                    longitude: 76.9521789
+                )
+            ),
             yearsExpert: 18,
             description: "Прокаева Светлана Викторовна работает в сфере физиотерапии. Основная задача ее работы - это нормализация функциональной работоспособности пациента. В своей практике физиотерапевты, в основном, используют несколько методов, среди которых: холод или тепло, ультразвук, магнитные поля, массаж, физические упражнения, ультрафиолетовое излучение и т.д.",
             reviews: [

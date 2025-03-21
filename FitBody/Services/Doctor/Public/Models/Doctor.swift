@@ -1,5 +1,7 @@
 import Foundation
 
+// MARK: - Doctor
+
 struct Doctor: Decodable, Equatable, Sendable {
     typealias ID = Int
     typealias Rating = Double
@@ -10,8 +12,17 @@ struct Doctor: Decodable, Equatable, Sendable {
     let lastName: String
     let illustration: URL
     let rating: Rating?
-    let hospital: String?
+    let hospital: Hospital
     let yearsExpert: Int
     let description: String
     let reviews: [String]
+}
+
+// MARK: - Doctor.Hospital
+
+extension Doctor {
+    struct Hospital: Decodable, Equatable, Sendable {
+        let name: String
+        let address: Address
+    }
 }

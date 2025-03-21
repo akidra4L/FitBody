@@ -10,11 +10,11 @@ struct DoctorTableHeaderViewModel: Sendable {
     }
     
     var subtitle: String {
-        guard let hospital = doctor.hospital else {
-            return doctor.type
-        }
-        
-        return "\(doctor.type) | \(hospital)"
+        "\(doctor.type) | \(doctor.hospital.name)"
+    }
+    
+    var address: String {
+        doctor.hospital.address.name
     }
     
     private let doctor: Doctor

@@ -13,6 +13,10 @@ struct DoctorCellViewModel: Sendable {
         RatingViewModel(with: doctor.rating)
     }
     
+    var address: String {
+        doctor.address
+    }
+    
     private let doctor: HomeDoctorListItem
     
     init(with doctor: HomeDoctorListItem) {

@@ -146,6 +146,7 @@ extension HomeDoctorsCell: UICollectionViewDelegateFlowLayout {
         // imageViewHeight - 160
         // titleHeight - 44
         // ratingHeight - 16
-        160 + 44 + 16
+        // addressHeight - 24
+        160 + 44 + 16 + 24
     }
 }

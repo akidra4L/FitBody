@@ -10,7 +10,8 @@ final class HomeDoctorsProviderImpl: HomeDoctorsProvider {
                 id: $0.id,
                 lastName: $0.lastName,
                 rating: $0.rating,
-                illustration: $0.illustration
+                illustration: $0.illustration,
+                address: $0.hospital.name
             )
         }
         
