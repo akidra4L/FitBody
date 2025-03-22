@@ -64,6 +64,8 @@ final class SearchViewController: BaseViewController, SearchViewOutput {
     }
 }
 
+// MARK: - SearchViewDelegate
+
 extension SearchViewController: SearchViewDelegate {
     func searchView(_ view: SearchView, didSelectMapItemWithID id: Hospital.ID) {
         hospitalDidSelect?(id)

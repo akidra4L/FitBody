@@ -18,7 +18,7 @@ final class NetworkClientImpl: NetworkClient {
         headers: HTTPHeaders?
     ) async throws -> Response {
         let request = session.request(
-            Constants.baseURL,
+            Constants.baseURL + relativePath,
             method: method,
             parameters: parameters,
             headers: headers
