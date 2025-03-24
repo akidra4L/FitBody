@@ -44,6 +44,13 @@ final class SearchView: UIView {
         }
     }
     
+    func unselectAnnotation() {
+        let selectedAnnotations = mapView.selectedAnnotations
+        for annotation in selectedAnnotations {
+            mapView.deselectAnnotation(annotation, animated: true)
+        }
+    }
+    
     private func setup() {
         [mapView, zoomButtonsView].forEach { addSubview($0) }
         backgroundColor = Colors.fillBackgroundPrimary

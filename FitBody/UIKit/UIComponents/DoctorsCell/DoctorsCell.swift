@@ -1,15 +1,15 @@
 import UIKit
 import SnapKit
 
-// MARK: HomeDoctorsCellDelegate
+// MARK: DoctorsCellDelegate
 
-protocol HomeDoctorsCellDelegate: AnyObject {
-    func homeDoctorsCell(_ cell: HomeDoctorsCell, didSelectDoctor doctor: HomeDoctorListItem)
+protocol DoctorsCellDelegate: AnyObject {
+    func doctorsCell(_ cell: DoctorsCell, didSelectDoctor doctor: HomeDoctorListItem)
 }
 
-// MARK: - HomeDoctorsCell
+// MARK: - DoctorsCell
 
-final class HomeDoctorsCell: UITableViewCell {
+final class DoctorsCell: UITableViewCell {
     var collectionViewOffset: CGFloat {
         get { getContentOffset() }
         set { collectionView.contentOffset.x = newValue }
@@ -19,7 +19,7 @@ final class HomeDoctorsCell: UITableViewCell {
     
     var doctors: [HomeDoctorListItem] = []
     
-    weak var delegate: HomeDoctorsCellDelegate?
+    weak var delegate: DoctorsCellDelegate?
     
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
@@ -82,7 +82,7 @@ final class HomeDoctorsCell: UITableViewCell {
 
 // MARK: - UICollectionViewDataSource
 
-extension HomeDoctorsCell: UICollectionViewDataSource {
+extension DoctorsCell: UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         doctors.count
     }
@@ -97,7 +97,7 @@ extension HomeDoctorsCell: UICollectionViewDataSource {
 
 // MARK: - UICollectionViewDelegate
 
-extension HomeDoctorsCell: UICollectionViewDelegate {
+extension DoctorsCell: UICollectionViewDelegate {
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         collectionView.deselectItem(at: indexPath, animated: true)
         guard let doctor = doctors[safe: indexPath.item] else {
@@ -105,7 +105,7 @@ extension HomeDoctorsCell: UICollectionViewDelegate {
             return
         }
         
-        delegate?.homeDoctorsCell(self, didSelectDoctor: doctor)
+        delegate?.doctorsCell(self, didSelectDoctor: doctor)
     }
     
     func collectionView(
@@ -126,19 +126,19 @@ extension HomeDoctorsCell: UICollectionViewDelegate {
 
 // MARK: - UICollectionViewDelegateFlowLayout
 
-extension HomeDoctorsCell: UICollectionViewDelegateFlowLayout {
+extension DoctorsCell: UICollectionViewDelegateFlowLayout {
     func collectionView(
         _ collectionView: UICollectionView,
         layout collectionViewLayout: UICollectionViewLayout,
         sizeForItemAt indexPath: IndexPath
     ) -> CGSize {
-        HomeDoctorsCell.getSize()
+        DoctorsCell.getSize()
     }
     
     static func getSize() -> CGSize {
         CGSize(
             width: 250,
-            height: HomeDoctorsCell.getHeight()
+            height: DoctorsCell.getHeight()
         )
     }
 

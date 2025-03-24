@@ -17,7 +17,7 @@ final class HomeTableViewFactory {
         [
             HomeBookDoctorCell.self,
             HomeWaterIntakeCell.self,
-            HomeDoctorsCell.self
+            DoctorsCell.self
         ].forEach { tableView.register(cellClass: $0) }
         tableView.separatorStyle = .none
         tableView.sectionFooterHeight = 0

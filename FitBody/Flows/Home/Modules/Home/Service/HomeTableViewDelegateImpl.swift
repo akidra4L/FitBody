@@ -15,7 +15,7 @@ final class HomeTableViewDelegateImpl: NSObject {
 extension HomeTableViewDelegateImpl: UITableViewDelegate {
     func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
         switch cell {
-        case let cell as HomeDoctorsCell:
+        case let cell as DoctorsCell:
             cell.delegate = self
         default:
             return
@@ -94,15 +94,15 @@ extension HomeTableViewDelegateImpl: UITableViewDelegate {
     }
     
     private func doctorItemHeight() -> CGFloat {
-        let collectionViewHeight = HomeDoctorsCell.getHeight()
+        let collectionViewHeight = DoctorsCell.getHeight()
         return collectionViewHeight + 8 + 24
     }
 }
 
-// MARK: - HomeDoctorsCellDelegate
+// MARK: - DoctorsCellDelegate
 
-extension HomeTableViewDelegateImpl: HomeDoctorsCellDelegate {
-    func homeDoctorsCell(_ cell: HomeDoctorsCell, didSelectDoctor doctor: HomeDoctorListItem) {
+extension HomeTableViewDelegateImpl: DoctorsCellDelegate {
+    func doctorsCell(_ cell: DoctorsCell, didSelectDoctor doctor: HomeDoctorListItem) {
         doctorDidSelect?(doctor.id)
     }
 }

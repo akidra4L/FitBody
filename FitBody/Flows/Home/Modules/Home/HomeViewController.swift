@@ -26,6 +26,7 @@ final class HomeViewController: BaseViewController, HomeViewOutput {
         }
     }
     
+    private lazy var activityIndicatorView = ActivityIndicatorView(size: .large, color: Colors.fillPrimary)
     private lazy var tableView = HomeTableViewFactory().make(
         with: dataSourceImpl,
         and: delegateImpl
@@ -36,13 +37,10 @@ final class HomeViewController: BaseViewController, HomeViewOutput {
     
     @Injected private var homeDoctorsProvider: HomeDoctorsProvider
     
-    override func loadView() {
-        view = tableView
-    }
-    
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        setup()
         setupContent()
         setupTableViewDelegateImpl()
     }
@@ -58,8 +56,36 @@ final class HomeViewController: BaseViewController, HomeViewOutput {
         navigationItem.largeTitleDisplayMode = .never
     }
     
+    private func changeLoadingState(to isLoading: Bool) {
+        isLoading ? activityIndicatorView.startAnimating() : activityIndicatorView.stopAnimating()
+        tableView.isHidden = isLoading
+    }
+    
+    private func setup() {
+        [activityIndicatorView, tableView].forEach { view.addSubview($0) }
+        view.backgroundColor = Colors.fillBackgroundPrimary
+        
+        setupConstraints()
+    }
+    
+    private func setupConstraints() {
+        activityIndicatorView.snp.makeConstraints { make in
+            make.center.equalToSuperview()
+        }
+        tableView.snp.makeConstraints { make in
+            make.top.equalToSuperview()
+            make.directionalHorizontalEdges.equalToSuperview()
+            make.bottom.equalToSuperview().offset(-tabBarHeight)
+        }
+    }
+    
     private func setupContent() {
+        changeLoadingState(to: true)
         Task { [weak self] in
+            defer {
+                self?.changeLoadingState(to: false)
+            }
+            
             await self?.setupRequiredData()
             
             self?.configureSections()

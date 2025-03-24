@@ -55,6 +55,7 @@ final class DoctorView: UIView {
     func changeLoadingState(to isLoading: Bool) {
         isLoading ? activityIndicatorView.startAnimating() : activityIndicatorView.stopAnimating()
         tableView.isHidden = isLoading
+        actionButton.isHidden = isLoading
     }
     
     private func setup() {

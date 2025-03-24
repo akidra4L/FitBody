@@ -6,13 +6,26 @@ import Resolver
 // MARK: - SearchViewOutput
 
 protocol SearchViewOutput: AnyObject {
-    var hospitalDidSelect: ((Hospital.ID) -> Void)? { get set }
+    var hospitalDidSelect: ((
+        HospitalMapItem,
+        @escaping () -> Void
+    ) -> Void)? { get set }
 }
 
 // MARK: - SearchViewController
 
 final class SearchViewController: BaseViewController, SearchViewOutput {
-    var hospitalDidSelect: ((Hospital.ID) -> Void)?
+    var hospitalDidSelect: ((HospitalMapItem, @escaping () -> Void) -> Void)?
+    
+    private var hospitals: [HospitalMapItem] = [] {
+        didSet {
+            guard oldValue != hospitals else {
+                return
+            }
+            
+            mainView.addAnnotations(with: hospitals)
+        }
+    }
     
     @Injected private var hospitalMapItemsProvider: HospitalMapItemsProviderImpl
     
@@ -39,9 +52,7 @@ final class SearchViewController: BaseViewController, SearchViewOutput {
     private func getMapItems() {
         Task { [weak self, hospitalMapItemsProvider] in
             do {
-                let hospitals = try await hospitalMapItemsProvider.get()
-                
-                self?.mainView.addAnnotations(with: hospitals)
+                self?.hospitals = try await hospitalMapItemsProvider.get()
             } catch {
                 print("ERROR: ", error.localizedDescription)
             }
@@ -68,6 +79,13 @@ final class SearchViewController: BaseViewController, SearchViewOutput {
 
 extension SearchViewController: SearchViewDelegate {
     func searchView(_ view: SearchView, didSelectMapItemWithID id: Hospital.ID) {
-        hospitalDidSelect?(id)
+        guard let hospital = hospitals.first(where: { $0.id == id }) else {
+            assertionFailure()
+            return
+        }
+        
+        hospitalDidSelect?(hospital) { [weak self] in
+            self?.mainView.unselectAnnotation()
+        }
     }
 }
