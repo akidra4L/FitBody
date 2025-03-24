@@ -33,6 +33,7 @@ final class LaunchScreenViewController: BaseViewController, LaunchScreenViewOutp
         }
 
         NavigationBarConfigurator().configure(navigationBar: navigationBar, with: .transparent)
+        navigationItem.largeTitleDisplayMode = .never
     }
     
     private func preloadServices() {

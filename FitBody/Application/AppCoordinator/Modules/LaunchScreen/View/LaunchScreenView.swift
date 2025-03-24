@@ -17,7 +17,7 @@ final class LaunchScreenView: UIView {
     
     private func setup() {
         addSubview(titleLabel)
-        backgroundColor = Colors.fillInput
+        backgroundColor = Colors.fillPrimary
         
         setupConstraints()
     }
@@ -32,7 +32,6 @@ final class LaunchScreenView: UIView {
         let label = UILabel()
         label.font = .systemFont(ofSize: 24, weight: .semibold)
         label.text = "FitBody"
-        label.textAlignment = .center
         label.textColor = Colors.fillInput
         return label
     }
