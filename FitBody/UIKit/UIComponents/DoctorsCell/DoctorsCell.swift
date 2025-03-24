@@ -4,7 +4,7 @@ import SnapKit
 // MARK: DoctorsCellDelegate
 
 protocol DoctorsCellDelegate: AnyObject {
-    func doctorsCell(_ cell: DoctorsCell, didSelectDoctor doctor: HomeDoctorListItem)
+    func doctorsCell(_ cell: DoctorsCell, didSelectDoctor doctor: DoctorListItem)
 }
 
 // MARK: - DoctorsCell
@@ -17,7 +17,7 @@ final class DoctorsCell: UITableViewCell {
     
     private lazy var collectionView = makeCollectionView()
     
-    var doctors: [HomeDoctorListItem] = []
+    var doctors: [DoctorListItem] = []
     
     weak var delegate: DoctorsCellDelegate?
     
@@ -32,7 +32,7 @@ final class DoctorsCell: UITableViewCell {
         nil
     }
     
-    func configure(with doctors: [HomeDoctorListItem]) {
+    func configure(with doctors: [DoctorListItem]) {
         self.doctors = doctors
         
         collectionView.reloadData()

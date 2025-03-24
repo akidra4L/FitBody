@@ -18,15 +18,18 @@ final class DoctorCoordinator: Coordinator, DoctorCoordinatorOutput {
     var router: Router
     private let id: ID
     private let modulesFactory: DoctorModulesFactory
+    private let coordinatorsFactory: CoordinatorsFactory
     
     init(
         router: Router,
         id: ID,
-        modulesFactory: DoctorModulesFactory
+        modulesFactory: DoctorModulesFactory,
+        coordinatorsFactory: CoordinatorsFactory
     ) {
         self.router = router
         self.id = id
         self.modulesFactory = modulesFactory
+        self.coordinatorsFactory = coordinatorsFactory
     }
     
     func start() {
@@ -38,6 +41,9 @@ final class DoctorCoordinator: Coordinator, DoctorCoordinatorOutput {
         doctor.showMoreReviewsDidTap = { [weak self] reviews in
             self?.presentDoctorReview(with: reviews)
         }
+        doctor.hospitalDidTap = { [weak self] id in
+            self?.runHospitalFlow(with: id)
+        }
         router.push(doctor) { [onFinish] in
             onFinish?()
         }
@@ -46,5 +52,14 @@ final class DoctorCoordinator: Coordinator, DoctorCoordinatorOutput {
     private func presentDoctorReview(with reviews: [String]) {
         let doctorReview = modulesFactory.makeDoctorReview(with: reviews)
         router.push(doctorReview)
+    }
+    
+    private func runHospitalFlow(with id: Hospital.ID) {
+        let coordinator = coordinatorsFactory.makeHospital(with: router, and: id)
+        coordinator.onFinish = { [weak self, weak coordinator] in
+            self?.removeDependency(coordinator)
+        }
+        addDependency(coordinator)
+        coordinator.start()
     }
 }

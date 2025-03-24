@@ -13,6 +13,7 @@ final class MockDataProvider {
             hospital: Doctor.Hospital(
                 id: 1,
                 name: "Expert Neuro",
+                rating: 4.7,
                 address: Address(
                     name: "Auezov St 67",
                     latitude: 43.2436367,
@@ -50,6 +51,7 @@ final class MockDataProvider {
             hospital: Doctor.Hospital(
                 id: 2,
                 name: "Atlant Clinic",
+                rating: 5,
                 address: Address(
                     name: "Koktem-2, 2",
                     latitude: 43.2273347,
@@ -95,6 +97,7 @@ final class MockDataProvider {
             hospital: Doctor.Hospital(
                 id: 1,
                 name: "Expert Neuro",
+                rating: 4.7,
                 address: Address(
                     name: "Auezov St 67",
                     latitude: 43.2436367,
@@ -125,6 +128,7 @@ final class MockDataProvider {
             hospital: Doctor.Hospital(
                 id: 1,
                 name: "Expert Neuro",
+                rating: 4.7,
                 address: Address(
                     name: "Auezov St 67",
                     latitude: 43.2436367,
@@ -155,6 +159,7 @@ final class MockDataProvider {
             hospital: Doctor.Hospital(
                 id: 3,
                 name: "Mediker Hospital International",
+                rating: 4.4,
                 address: Address(
                     name: "Auezov St 67",
                     latitude: 43.215356,

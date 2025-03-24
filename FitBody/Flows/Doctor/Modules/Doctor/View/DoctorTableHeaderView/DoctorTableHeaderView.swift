@@ -7,13 +7,12 @@ final class DoctorTableHeaderView: UIView {
     private lazy var illustrationImageView = makeIllustrationImageView()
     private lazy var titleLabel = makeTitleLabel()
     private lazy var subtitleLabel = makeSubtitleLabel()
-    private lazy var addressView = AddressView()
     
     override init(frame: CGRect) {
         super.init(
             frame: CGRect(
                 origin: .zero,
-                size: CGSize(width: .zero, height: 360)
+                size: CGSize(width: .zero, height: 340)
             )
         )
         
@@ -29,9 +28,6 @@ final class DoctorTableHeaderView: UIView {
         illustrationImageView.kf.setImage(with: viewModel.illustration)
         titleLabel.text = viewModel.title
         subtitleLabel.text = viewModel.subtitle
-        addressView.configure(with: viewModel.address)
-        
-        layoutIfNeeded()
     }
     
     private func setup() {
@@ -59,10 +55,6 @@ final class DoctorTableHeaderView: UIView {
         subtitleLabel.snp.makeConstraints { make in
             make.top.equalTo(titleLabel.snp.bottom).offset(4)
             make.directionalHorizontalEdges.equalToSuperview().inset(12)
-        }
-        addressView.snp.makeConstraints { make in
-            make.top.equalTo(subtitleLabel.snp.bottom).offset(8)
-            make.directionalHorizontalEdges.equalToSuperview().inset(12)
             make.bottom.equalToSuperview().offset(-12)
         }
     }
@@ -72,8 +64,7 @@ final class DoctorTableHeaderView: UIView {
         [
             illustrationImageView,
             titleLabel,
-            subtitleLabel,
-            addressView
+            subtitleLabel
         ].forEach { view.addSubview($0) }
         view.backgroundColor = Colors.fillBackgroundSecondary
         view.clipsToBounds = true

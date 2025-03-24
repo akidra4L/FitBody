@@ -67,6 +67,7 @@ final class DoctorTopItemView: UIView {
     
     private func makeTitleLabel() -> UILabel {
         let label = UILabel(with: Fonts.body3)
+        label.numberOfLines = 2
         label.text = viewModel.title
         label.textAlignment = .center
         label.textColor = Colors.textPrimary

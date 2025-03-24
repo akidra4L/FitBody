@@ -35,7 +35,7 @@ final class HomeViewController: BaseViewController, HomeViewOutput {
     private lazy var dataSourceImpl = HomeTableViewDataSourceImpl()
     private lazy var delegateImpl = HomeTableViewDelegateImpl()
     
-    @Injected private var homeDoctorsProvider: HomeDoctorsProvider
+    @Injected private var doctorsProvider: DoctorsProvider
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -100,7 +100,7 @@ final class HomeViewController: BaseViewController, HomeViewOutput {
     
     private func getDoctors() async {
         do {
-            parameters.doctors = try await homeDoctorsProvider.get()
+            parameters.doctors = try await doctorsProvider.get()
         } catch {
             print("ERROR: ", error.localizedDescription)
         }

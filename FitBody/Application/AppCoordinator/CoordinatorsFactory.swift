@@ -20,7 +20,8 @@ final class CoordinatorsFactory {
         DoctorCoordinator(
             router: router,
             id: id,
-            modulesFactory: ModulesFactory()
+            modulesFactory: ModulesFactory(),
+            coordinatorsFactory: CoordinatorsFactory()
         )
     }
     
@@ -50,7 +51,8 @@ final class CoordinatorsFactory {
     func makeSearch(with router: Router) -> Coordinator {
         SearchCoordinator(
             router: router,
-            modulesFactory: ModulesFactory()
+            modulesFactory: ModulesFactory(),
+            coordinatorsFactory: CoordinatorsFactory()
         )
     }
     
@@ -62,6 +64,18 @@ final class CoordinatorsFactory {
             router: router,
             launchInstruction: launchInstruction,
             modulesFactory: ModulesFactory()
+        )
+    }
+    
+    func makeHospital(
+        with router: Router,
+        and id: Hospital.ID
+    ) -> Coordinator & HospitalCoordinatorOutput  {
+        HospitalCoordinator(
+            router: router,
+            id: id,
+            modulesFactory: ModulesFactory(),
+            coordinatorsFactory: CoordinatorsFactory()
         )
     }
 }

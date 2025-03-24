@@ -4,6 +4,7 @@ final class DoctorSectionsFactory {
     func make(from doctor: Doctor) -> [DoctorSection] {
         [
             DoctorSection(kind: .top, rows: [.top(doctor)]),
+            DoctorSection(kind: .hospital, rows: [.hospital(doctor.hospital)]),
             DoctorSection(kind: .aboutMe, rows: [.aboutMe(doctor.description)]),
             DoctorSection(
                 kind: .review(doctor.reviews.count),

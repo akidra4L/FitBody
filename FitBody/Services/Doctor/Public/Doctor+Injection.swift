@@ -5,5 +5,9 @@ extension Resolver {
         register { DoctorProviderImpl() }
             .implements(DoctorProvider.self)
             .scope(.shared)
+        
+        register { DoctorsProviderImpl() }
+            .implements(DoctorsProvider.self)
+            .scope(.shared)
     }
 }

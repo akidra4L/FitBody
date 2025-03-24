@@ -38,6 +38,12 @@ extension DoctorTableViewDataSourceImpl: UITableViewDataSource {
             let cell: DoctorReviewsCell = tableView.dequeueReusableCell(for: indexPath)
             cell.configure(with: reviews)
             return cell
+        case let .hospital(hospital):
+            let cell: DoctorHospitalCell = tableView.dequeueReusableCell(for: indexPath)
+            cell.configure(
+                with: DoctorHospitalViewModel(hospital: hospital)
+            )
+            return cell
         }
     }
 }

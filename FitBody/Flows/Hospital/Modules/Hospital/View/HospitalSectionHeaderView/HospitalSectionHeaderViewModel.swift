@@ -1,24 +1,24 @@
 import Foundation
 
-struct DoctorSectionHeaderViewModel: Sendable {
-    typealias Kind = DoctorSection.Kind
+struct HospitalSectionHeaderViewModel: Sendable {
+    typealias Kind = HospitalSection.Kind
     
     var title: String? {
         switch kind {
-        case .aboutMe:
-            "About me"
-        case .review:
+        case .doctors:
+            "Doctors in this Hospital"
+        case .reviews:
             "Reviews"
-        case .top, .hospital:
+        case .top:
             nil
         }
     }
     
     var isHiddenButton: Bool {
         switch kind {
-        case let .review(count):
+        case let .reviews(count):
             count <= 3
-        case .aboutMe, .top, .hospital:
+        case .top, .doctors:
             true
         }
     }

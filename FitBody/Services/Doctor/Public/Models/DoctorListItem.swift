@@ -1,6 +1,6 @@
 import Foundation
 
-struct HomeDoctorListItem: Decodable, Equatable, Sendable {
+struct DoctorListItem: Decodable, Equatable, Sendable {
     typealias ID = Doctor.ID
     
     let id: ID

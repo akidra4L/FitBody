@@ -5,6 +5,12 @@ import MapKit
 
 final class SearchMapMarkerAnnotationView: MKMarkerAnnotationView {
     static let reuseIdentifier = "hospitalPin"
+    
+    override func prepareForReuse() {
+        super.prepareForReuse()
+        
+        setup()
+    }
 
     override init(annotation: MKAnnotation?, reuseIdentifier: String?) {
         super.init(annotation: annotation, reuseIdentifier: reuseIdentifier)

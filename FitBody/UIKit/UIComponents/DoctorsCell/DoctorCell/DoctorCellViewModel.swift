@@ -17,9 +17,9 @@ struct DoctorCellViewModel: Sendable {
         doctor.address
     }
     
-    private let doctor: HomeDoctorListItem
+    private let doctor: DoctorListItem
     
-    init(with doctor: HomeDoctorListItem) {
+    init(with doctor: DoctorListItem) {
         self.doctor = doctor
     }
 }

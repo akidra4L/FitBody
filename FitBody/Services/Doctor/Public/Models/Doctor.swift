@@ -26,6 +26,7 @@ extension Doctor {
         
         let id: ID
         let name: String
+        let rating: Rating?
         let address: Address
     }
 }

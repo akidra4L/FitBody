@@ -9,7 +9,7 @@ final class HomeSectionsFactory {
         ].compactMap { $0 }
     }
     
-    private func makeDoctorsSection(from doctors: [HomeDoctorListItem]) -> HomeSection? {
+    private func makeDoctorsSection(from doctors: [DoctorListItem]) -> HomeSection? {
         guard !doctors.isEmpty else {
             return nil
         }

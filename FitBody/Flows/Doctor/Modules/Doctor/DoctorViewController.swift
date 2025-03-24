@@ -5,6 +5,7 @@ import Resolver
 
 protocol DoctorViewOutput: AnyObject {
     var showMoreReviewsDidTap: (([String]) -> Void)? { get set }
+    var hospitalDidTap: ((Hospital.ID) -> Void)? { get set }
 }
 
 // MARK: - DoctorViewController
@@ -13,6 +14,7 @@ final class DoctorViewController: BaseViewController, DoctorViewOutput {
     typealias ID = Doctor.ID
     
     var showMoreReviewsDidTap: (([String]) -> Void)?
+    var hospitalDidTap: ((Hospital.ID) -> Void)?
     
     private var doctor: Doctor?
     private var sections: [DoctorSection] = [] {
@@ -107,6 +109,9 @@ final class DoctorViewController: BaseViewController, DoctorViewOutput {
         delegateImpl.readAllDidTap = { [weak self] cell in
             self?.handleReadAllTap(in: cell)
         }
+        delegateImpl.hospitalDidTap = { [weak self] in
+            self?.handleHospitalTap()
+        }
     }
     
     private func handleShowReviewsTap() {
@@ -136,6 +141,15 @@ final class DoctorViewController: BaseViewController, DoctorViewOutput {
             }
             mainView.tableView.reloadRows(at: [indexPath], with: .automatic)
         }
+    }
+    
+    private func handleHospitalTap() {
+        guard let hospitalID = doctor?.hospital.id else {
+            assertionFailure()
+            return
+        }
+        
+        hospitalDidTap?(hospitalID)
     }
 }
 

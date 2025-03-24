@@ -1,10 +1,9 @@
 import UIKit
 
-final class DoctorTableViewFactory {
+final class HospitalTableViewFactory {
     func make(
-        with dataSource: UITableViewDataSource?,
-        and delegate: UITableViewDelegate?,
-        tableHeaderView: UIView?
+        with dataSource: UITableViewDataSource,
+        and delegate: UITableViewDelegate
     ) -> UITableView {
         let tableView = UITableView(frame: .zero, style: .grouped)
         tableView.alwaysBounceVertical = true
@@ -13,19 +12,16 @@ final class DoctorTableViewFactory {
         tableView.dataSource = dataSource
         tableView.delegate = delegate
         tableView.estimatedSectionFooterHeight = 0
-        tableView.estimatedSectionHeaderHeight = 40
-        tableView.register(aClass: DoctorSectionHeaderView.self)
+        tableView.estimatedSectionHeaderHeight = 32
+        tableView.register(aClass: HospitalSectionHeaderView.self)
         [
-            DoctorAboutCell.self,
-            DoctorReviewsCell.self,
-            DoctorTopCell.self,
-            DoctorHospitalCell.self
+            HospitalTopCell.self,
+            DoctorsCell.self
         ].forEach { tableView.register(cellClass: $0) }
         tableView.separatorStyle = .none
         tableView.sectionFooterHeight = 0
-        tableView.sectionHeaderHeight = 40
+        tableView.sectionHeaderHeight = 32
         tableView.showsVerticalScrollIndicator = false
-        tableView.tableHeaderView = tableHeaderView
         return tableView
     }
 }

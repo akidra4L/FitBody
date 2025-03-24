@@ -7,6 +7,7 @@ final class DoctorTableViewDelegateImpl: NSObject {
     
     var showMoreReviewsDidTap: (() -> Void)?
     var readAllDidTap: ((_ cell: UITableViewCell) -> Void)?
+    var hospitalDidTap: (() -> Void)?
 }
 
 // MARK: - UITableViewDelegate
@@ -15,6 +16,8 @@ extension DoctorTableViewDelegateImpl: UITableViewDelegate {
     func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
         switch cell {
         case let cell as DoctorAboutCell:
+            cell.delegate = self
+        case let cell as DoctorHospitalCell:
             cell.delegate = self
         default:
             return
@@ -44,7 +47,7 @@ extension DoctorTableViewDelegateImpl: UITableViewDelegate {
         switch sections[section].kind {
         case .aboutMe, .review:
             tableView.dequeueReusableHeaderFooterView(DoctorSectionHeaderView.self)
-        case .top:
+        case .top, .hospital:
             nil
         }
     }
@@ -59,12 +62,10 @@ extension DoctorTableViewDelegateImpl: UITableViewDelegate {
     
     private func heightForRowAt(_ tableView: UITableView, indexPath: IndexPath, isEstimated: Bool) -> CGFloat {
         switch sections[indexPath.section].kind {
-        case .aboutMe:
+        case .aboutMe, .review, .hospital:
             UITableView.automaticDimension
         case .top:
             isEstimated ? 108 : UITableView.automaticDimension
-        case .review:
-            UITableView.automaticDimension
         }
     }
     
@@ -72,7 +73,7 @@ extension DoctorTableViewDelegateImpl: UITableViewDelegate {
         switch sections[section].kind {
         case .aboutMe, .review:
             40
-        case .top:
+        case .top, .hospital:
             .leastNormalMagnitude
         }
     }
@@ -91,5 +92,13 @@ extension DoctorTableViewDelegateImpl: DoctorSectionHeaderViewDelegate {
 extension DoctorTableViewDelegateImpl: DoctorAboutCellDelegate {
     func didTapActionButton(in cell: DoctorAboutCell) {
         readAllDidTap?(cell)
+    }
+}
+
+// MARK: - DoctorHospitalCellDelegate
+
+extension DoctorTableViewDelegateImpl: DoctorHospitalCellDelegate {
+    func didTapContainerView(in cell: DoctorHospitalCell) {
+        hospitalDidTap?()
     }
 }

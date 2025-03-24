@@ -40,7 +40,7 @@ final class DoctorTopCell: UITableViewCell {
             make.top.equalToSuperview()
             make.leading.greaterThanOrEqualToSuperview()
             make.trailing.lessThanOrEqualToSuperview()
-            make.bottom.equalToSuperview().offset(-12)
+            make.bottom.equalToSuperview().offset(-24)
         }
     }
     

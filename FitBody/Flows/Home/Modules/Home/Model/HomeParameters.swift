@@ -1,5 +1,5 @@
 import Foundation
 
 struct HomeParameters: Sendable {
-    var doctors: [HomeDoctorListItem] = []
+    var doctors: [DoctorListItem] = []
 }

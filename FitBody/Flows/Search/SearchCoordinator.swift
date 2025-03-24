@@ -15,13 +15,16 @@ final class SearchCoordinator: Coordinator, SearchCoordinatorOutput {
     
     var router: Router
     private let modulesFactory: SearchModulesFactory
+    private let coordinatorsFactory: CoordinatorsFactory
     
     init(
         router: Router,
-        modulesFactory: SearchModulesFactory
+        modulesFactory: SearchModulesFactory,
+        coordinatorsFactory: CoordinatorsFactory
     ) {
         self.router = router
         self.modulesFactory = modulesFactory
+        self.coordinatorsFactory = coordinatorsFactory
     }
     
     func start() {
@@ -46,7 +49,7 @@ final class SearchCoordinator: Coordinator, SearchCoordinatorOutput {
         searchDetail.onSuccess = { [weak self] in
             self?.router.dismissModule { [weak self] in
                 completion?()
-//                self?.runRestaurant(with: restaurantMapItem.id)
+                self?.runHospitalFlow(with: hospitalMapItem.id)
             }
         }
         router.presentFloatingPanel(
@@ -55,5 +58,14 @@ final class SearchCoordinator: Coordinator, SearchCoordinatorOutput {
                 with: .adaptive(contentLayout: searchDetail.contentLayout)
             )
         )
+    }
+    
+    private func runHospitalFlow(with id: Hospital.ID) {
+        let coordinator = coordinatorsFactory.makeHospital(with: router, and: id)
+        coordinator.onFinish = { [weak self, weak coordinator] in
+            self?.removeDependency(coordinator)
+        }
+        addDependency(coordinator)
+        coordinator.start()
     }
 }

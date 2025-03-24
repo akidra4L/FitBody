@@ -112,6 +112,7 @@ extension SearchView: MKMapViewDelegate {
             return
         }
         
+        mapView.setCenter(annotation.coordinate, animated: true)
         delegate?.searchView(self, didSelectMapItemWithID: annotation.id)
     }
 }

@@ -1,36 +1,21 @@
 import UIKit
 
-// MARK: - HomeTableViewDelegateImpl
+// MARK: - HospitalTableViewDelegateImpl
 
-final class HomeTableViewDelegateImpl: NSObject {
-    var sections: [HomeSection] = []
+final class HospitalTableViewDelegateImpl: NSObject {
+    var sections: [HospitalSection] = []
     
-    var bookDoctorDidSelect: (() -> Void)?
-    var waterIntakeDidSelect: (() -> Void)?
     var doctorDidSelect: ((Doctor.ID) -> Void)?
 }
 
 // MARK: - UITableViewDelegate
 
-extension HomeTableViewDelegateImpl: UITableViewDelegate {
+extension HospitalTableViewDelegateImpl: UITableViewDelegate {
     func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
         switch cell {
         case let cell as DoctorsCell:
             cell.delegate = self
         default:
-            return
-        }
-    }
-    
-    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        tableView.deselectRow(at: indexPath, animated: true)
-        
-        switch sections[indexPath.section].kind {
-        case .bookDoctor:
-            bookDoctorDidSelect?()
-        case .waterIntake:
-            waterIntakeDidSelect?()
-        case .doctors:
             return
         }
     }
@@ -44,23 +29,20 @@ extension HomeTableViewDelegateImpl: UITableViewDelegate {
     }
     
     func tableView(_ tableView: UITableView, willDisplayHeaderView view: UIView, forSection section: Int) {
-        guard let view = view as? HomeSectionHeaderView else {
+        guard let view = view as? HospitalSectionHeaderView else {
             return
         }
         
-        switch sections[section].kind {
-        case .doctors:
-            view.configure(with: "Doctors in FitBody")
-        default:
-            return
-        }
+        view.configure(
+            with: HospitalSectionHeaderViewModel(with: sections[section].kind)
+        )
     }
     
     func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
         switch sections[section].kind {
-        case .doctors:
-            tableView.dequeueReusableHeaderFooterView(HomeSectionHeaderView.self)
-        case .bookDoctor, .waterIntake:
+        case .doctors, .reviews:
+            tableView.dequeueReusableHeaderFooterView(HospitalSectionHeaderView.self)
+        case .top:
             nil
         }
     }
@@ -75,10 +57,8 @@ extension HomeTableViewDelegateImpl: UITableViewDelegate {
     
     private func heightForRowAt(_ tableView: UITableView, indexPath: IndexPath, isEstimated: Bool) -> CGFloat {
         switch sections[indexPath.section].kind {
-        case .bookDoctor:
+        case .top, .reviews:
             UITableView.automaticDimension
-        case .waterIntake:
-            isEstimated ? 140 : UITableView.automaticDimension
         case .doctors:
             doctorItemHeight()
         }
@@ -86,9 +66,9 @@ extension HomeTableViewDelegateImpl: UITableViewDelegate {
     
     private func heightForHeaderInSection(_ tableView: UITableView, in section: Int) -> CGFloat {
         switch sections[section].kind {
-        case .doctors:
+        case .doctors, .reviews:
             40
-        case .bookDoctor, .waterIntake:
+        case .top:
             .leastNormalMagnitude
         }
     }
@@ -101,7 +81,7 @@ extension HomeTableViewDelegateImpl: UITableViewDelegate {
 
 // MARK: - DoctorsCellDelegate
 
-extension HomeTableViewDelegateImpl: DoctorsCellDelegate {
+extension HospitalTableViewDelegateImpl: DoctorsCellDelegate {
     func doctorsCell(_ cell: DoctorsCell, didSelectDoctor doctor: DoctorListItem) {
         doctorDidSelect?(doctor.id)
     }

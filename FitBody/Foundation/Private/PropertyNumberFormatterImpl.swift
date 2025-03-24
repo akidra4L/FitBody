@@ -15,6 +15,7 @@ final class PropertyNumberFormatterImpl: PropertyNumberFormatter {
     private func formatter() -> NumberFormatter {
         let formatter = NumberFormatter()
         
+        formatter.minimumFractionDigits = 1
         formatter.maximumFractionDigits = 1
         formatter.roundingMode = .up
         

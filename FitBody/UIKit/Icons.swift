@@ -1,6 +1,10 @@
 import UIKit
 
-enum Icons: Sendable {}
+enum Icons: Sendable {
+    static var chevronRight: UIImage {
+        UIImage(systemName: "chevron.right")!
+    }
+}
 
 // MARK: - 16
 
