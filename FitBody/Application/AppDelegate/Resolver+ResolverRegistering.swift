@@ -17,5 +17,6 @@ extension Resolver: ResolverRegistering {
         registerSearchServices()
         registerStartupScenarioServices()
         registerUserServices()
+        registerUserSessionServices()
     }
 }

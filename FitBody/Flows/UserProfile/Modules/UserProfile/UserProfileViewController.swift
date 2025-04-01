@@ -21,10 +21,13 @@ final class UserProfileViewController: BaseViewController, UserProfileViewOutput
     private lazy var dataSourceImpl = UserProfileTableViewDataSourceImpl()
     private lazy var delegateImpl = UserProfileTableViewDelegateImpl()
     
+    @Injected private var userSessionDestroyer: UserSessionDestroyer
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
         setup()
+        setupDelegateImpl()
         getUserProfile()
     }
     
@@ -72,6 +75,12 @@ final class UserProfileViewController: BaseViewController, UserProfileViewOutput
         }
     }
     
+    private func setupDelegateImpl() {
+        delegateImpl.quitDidTap = { [weak self] in
+            self?.userSessionDestroyer.destroy()
+        }
+    }
+    
     private func configureRows() {
         guard let userProfile else {
             assertionFailure()
@@ -79,7 +88,8 @@ final class UserProfileViewController: BaseViewController, UserProfileViewOutput
         }
         
         let rows: [UserProfileRow] = [
-            .info(userProfile)
+            .info(userProfile),
+            .quit
         ]
         
         dataSourceImpl.rows = rows

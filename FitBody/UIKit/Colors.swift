@@ -73,6 +73,10 @@ extension Colors {
 // MARK: - Text
 
 extension Colors {
+    static var textError: UIColor {
+        UIColor(named: "text-error")!
+    }
+    
     static var textPrimary: UIColor {
         UIColor(named: "text-primary")!
     }

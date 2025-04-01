@@ -19,6 +19,7 @@ final class AuthViewController: BaseViewController, AuthViewOutput {
     @Injected private var authManager: AuthManager
     @Injected private var authRegisterProvider: AuthRegisterProvider
     @Injected private var authorizedUserDataFetcher: AuthorizedUserDataFetcher
+    @Injected private var userSessionCreator: UserSessionCreator
     
     private var state: State {
         didSet {
@@ -79,13 +80,14 @@ extension AuthViewController: AuthViewDelegate {
         let request = LoginRequest(email: email, password: password)
         
         button.isLoading = true
-        Task { [weak self, manager = authManager, authorizedUserDataFetcher] in
+        Task { [weak self, manager = authManager, authorizedUserDataFetcher, userSessionCreator] in
             defer {
                 button.isLoading = false
             }
             
             do {
                 try await manager.login(with: request)
+                userSessionCreator.create()
                 
                 await authorizedUserDataFetcher.fetch()
                 

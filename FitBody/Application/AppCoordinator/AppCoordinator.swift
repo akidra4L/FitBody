@@ -7,7 +7,7 @@ final class AppCoordinator: Coordinator {
     var children: [Coordinator] = []
     
     @Injected private var onboardingProvider: OnboardingProvider
-    @Injected private var userProfileProvider: UserProfileProvider
+    @Injected private var userSessionProvider: UserSessionProvider
     
     var router: Router
     private let modulesFactory: AppModulesFactory
@@ -15,6 +15,8 @@ final class AppCoordinator: Coordinator {
     init(router: Router, modulesFactory: AppModulesFactory) {
         self.router = router
         self.modulesFactory = modulesFactory
+        
+        userSessionProvider.addObserver(self)
     }
     
     func start() {
@@ -61,9 +63,23 @@ final class AppCoordinator: Coordinator {
         if !onboardingProvider.didSee {
             runOnboardingFlow()
         } else {
-            (userProfileProvider.userProfile == nil)
+            (userSessionProvider.isActive == false)
                 ? runAuthFlow(state: .login)
                 : runTabBarFlow()
+        }
+    }
+}
+
+// MARK: - UserSessionProviderObserver
+
+extension AppCoordinator: UserSessionProviderObserver {
+    func userSessionProvider(_ provider: UserSessionProvider, didChangeUserSession isActive: Bool) {
+        guard !isActive else {
+            return
+        }
+        
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.25) { [weak self] in
+            self?.start()
         }
     }
 }

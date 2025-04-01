@@ -14,7 +14,8 @@ final class UserProfileTableViewFactory {
         tableView.estimatedSectionFooterHeight = 0
         tableView.estimatedSectionHeaderHeight = 32
         [
-            UserProfileInfoCell.self
+            UserProfileInfoCell.self,
+            UserProfileQuitCell.self
         ].forEach { tableView.register(cellClass: $0) }
         tableView.separatorStyle = .none
         tableView.sectionFooterHeight = 0

@@ -1,10 +1,9 @@
+import Foundation
 import Resolver
 
-import Foundation
+// MARK: - UserProfileManager
 
-// MARK: - UserProfileProviderImpl
-
-final class UserProfileProviderImpl {
+final class UserProfileManager {
     private let cachedUserProfile = FileStorageWrapper<UserProfile>(path: "User/userProfile.json")
     
     private let networkClient = Resolver.resolve(NetworkClient.self)
@@ -12,7 +11,7 @@ final class UserProfileProviderImpl {
 
 // MARK: - UserProfileProvider
 
-extension UserProfileProviderImpl: UserProfileProvider {
+extension UserProfileManager: UserProfileProvider {
     var userProfile: UserProfile? {
         cachedUserProfile.value
     }
@@ -36,5 +35,13 @@ extension UserProfileProviderImpl: UserProfileProvider {
         return userProfile
 
 //        try await networkClient.get("")
+    }
+}
+
+// MARK: - UserProfileCleaner
+
+extension UserProfileManager: UserProfileCleaner {
+    func clean() {
+        cachedUserProfile.update(with: nil)
     }
 }

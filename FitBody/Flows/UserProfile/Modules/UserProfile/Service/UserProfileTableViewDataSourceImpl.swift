@@ -21,6 +21,8 @@ extension UserProfileTableViewDataSourceImpl: UITableViewDataSource {
                 with: UserProfileInfoViewModel(with: userProfile)
             )
             return cell
+        case .quit:
+            return tableView.dequeueReusableCell(UserProfileQuitCell.self, for: indexPath)
         }
     }
 }
