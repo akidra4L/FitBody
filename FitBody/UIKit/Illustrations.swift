@@ -45,6 +45,10 @@ enum Illustrations: Sendable {
         UIImage(named: "onboarding-track-progress-illustration")!
     }
     
+    static var profileAvatarEmptyIllustration: UIImage {
+        UIImage(named: "profile-avatar-empty-illustration")!
+    }
+    
     static var userProfileSetIllustration: UIImage {
         UIImage(named: "user-profile-set-illustration")!
     }

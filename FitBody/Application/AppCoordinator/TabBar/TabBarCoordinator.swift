@@ -61,6 +61,21 @@ final class TabBarCoordinator: Coordinator {
         return navigationController
     }
     
+    private func runUserProfileFlow() -> UIViewController {
+        let navigationController = UINavigationController()
+        navigationController.tabBarItem.title = "Profile"
+        navigationController.tabBarItem.image = UIImage(systemName: "person.crop.circle")
+        navigationController.tabBarItem.selectedImage = UIImage(systemName: "person.crop.circle.fill")
+        
+        let coordinator = coordinatorsFactory.makeUserProfile(
+            with: Router(with: navigationController)
+        )
+        addDependency(coordinator)
+        coordinator.start()
+        
+        return navigationController
+    }
+    
     private func runStartupScenarioFlow(with launchInstruction: StartupScenarioLaunchInstruction) {
         let coordinator = coordinatorsFactory.makeStartupScenario(with: router, and: launchInstruction)
         coordinator.onFinish = { [weak self, weak coordinator] in
@@ -73,7 +88,8 @@ final class TabBarCoordinator: Coordinator {
     private func makeFlows() -> [UIViewController] {
         [
             runHomeFlow(),
-            runSearchFlow()
+            runSearchFlow(),
+            runUserProfileFlow()
         ]
     }
 }

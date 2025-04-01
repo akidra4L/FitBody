@@ -78,4 +78,11 @@ final class CoordinatorsFactory {
             coordinatorsFactory: CoordinatorsFactory()
         )
     }
+    
+    func makeUserProfile(with router: Router) -> Coordinator & UserProfileCoordinatorOutput {
+        UserProfileCoordinator(
+            router: router,
+            modulesFactory: ModulesFactory()
+        )
+    }
 }

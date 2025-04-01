@@ -11,7 +11,7 @@ final class RatingFormatterImpl: RatingFormatter {
             return "--"
         }
 
-        guard let formattedRating = propertyNumberFormatter.string(from: rating) else {
+        guard let formattedRating = propertyNumberFormatter.string(from: rating, maximumFractionDigits: 1) else {
             assertionFailure()
             return "--"
         }

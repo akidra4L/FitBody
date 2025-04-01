@@ -1,5 +1,5 @@
 import Foundation
 
 protocol PropertyNumberFormatter: AnyObject, Sendable {
-    func string(from double: Double) -> String?
+    func string(from double: Double, maximumFractionDigits: Int) -> String?
 }
