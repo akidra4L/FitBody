@@ -5,6 +5,7 @@ final class HomeSectionsFactory {
         [
             HomeSection(kind: .bookDoctor, rows: [.bookDoctor]),
             HomeSection(kind: .waterIntake, rows: [.waterIntake]),
+            HomeSection(kind: .workout, rows: [.workout]),
             makeDoctorsSection(from: parameters.doctors)
         ].compactMap { $0 }
     }

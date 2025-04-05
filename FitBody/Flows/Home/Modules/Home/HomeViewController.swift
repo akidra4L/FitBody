@@ -6,12 +6,14 @@ import Resolver
 
 protocol HomeViewOutput: AnyObject {
     var doctorDidSelect: ((Doctor.ID) -> Void)? { get set }
+    var workoutDidSelect: (() -> Void)? { get set }
 }
 
 // MARK: - HomeViewController
 
 final class HomeViewController: BaseViewController, HomeViewOutput {
     var doctorDidSelect: ((Doctor.ID) -> Void)?
+    var workoutDidSelect: (() -> Void)?
     
     private var parameters = HomeParameters()
     private var sections: [HomeSection] = [] {
@@ -114,8 +116,11 @@ final class HomeViewController: BaseViewController, HomeViewOutput {
         delegateImpl.bookDoctorDidSelect = { [weak self] in
             self?.handleBookDoctorSelect()
         }
-        delegateImpl.doctorDidSelect = { [weak self] id in
-            self?.doctorDidSelect?(id)
+        delegateImpl.doctorDidSelect = { [doctorDidSelect] id in
+            doctorDidSelect?(id)
+        }
+        delegateImpl.workoutDidSelect = { [workoutDidSelect] in
+            workoutDidSelect?()
         }
     }
     

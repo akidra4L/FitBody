@@ -14,6 +14,7 @@ extension HomeSection {
         case bookDoctor
         case waterIntake
         case doctors
+        case workout
     }
 }
 
@@ -24,5 +25,6 @@ extension HomeSection {
         case bookDoctor
         case waterIntake
         case doctors([DoctorListItem])
+        case workout
     }
 }

@@ -29,6 +29,8 @@ extension HomeTableViewDataSourceImpl: UITableViewDataSource {
             let cell: DoctorsCell = tableView.dequeueReusableCell(for: indexPath)
             cell.configure(with: doctors)
             return cell
+        case .workout:
+            return tableView.dequeueReusableCell(HomeWorkoutCell.self, for: indexPath)
         }
     }
 }

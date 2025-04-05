@@ -36,11 +36,23 @@ final class HomeCoordinator: Coordinator, HomeCoordinatorOutput {
         home.doctorDidSelect = { [weak self] id in
             self?.runDoctorFlow(with: id)
         }
+        home.workoutDidSelect = { [weak self] in
+            self?.runWorkoutFlow()
+        }
         router.setRootModule(home, animated: false)
     }
     
     private func runDoctorFlow(with id: Doctor.ID) {
         let coordinator = coordinatorsFactory.makeDoctor(with: router, id: id)
+        coordinator.onFinish = { [weak self, weak coordinator] in
+            self?.removeDependency(coordinator)
+        }
+        addDependency(coordinator)
+        coordinator.start()
+    }
+    
+    private func runWorkoutFlow() {
+        let coordinator = coordinatorsFactory.makeWorkout(with: router)
         coordinator.onFinish = { [weak self, weak coordinator] in
             self?.removeDependency(coordinator)
         }

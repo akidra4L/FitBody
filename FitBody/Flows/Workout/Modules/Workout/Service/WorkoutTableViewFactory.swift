@@ -1,11 +1,11 @@
 import UIKit
 
-final class HomeTableViewFactory {
+final class WorkoutTableViewFactory {
     func make(
         with dataSource: UITableViewDataSource,
         and delegate: UITableViewDelegate
     ) -> UITableView {
-        let tableView = UITableView(frame: .zero, style: .grouped)
+        let tableView = UITableView()
         tableView.alwaysBounceVertical = true
         tableView.backgroundColor = Colors.fillBackgroundPrimary
         tableView.contentInsetAdjustmentBehavior = .always
@@ -13,12 +13,8 @@ final class HomeTableViewFactory {
         tableView.delegate = delegate
         tableView.estimatedSectionFooterHeight = 0
         tableView.estimatedSectionHeaderHeight = 40
-        tableView.register(aClass: HomeSectionHeaderView.self)
         [
-            HomeBookDoctorCell.self,
-            HomeWaterIntakeCell.self,
-            HomeWorkoutCell.self,
-            DoctorsCell.self
+            WorkoutTopCell.self
         ].forEach { tableView.register(cellClass: $0) }
         tableView.separatorStyle = .none
         tableView.sectionFooterHeight = 0

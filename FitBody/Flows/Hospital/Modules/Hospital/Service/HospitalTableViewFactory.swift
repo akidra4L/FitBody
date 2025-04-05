@@ -12,7 +12,7 @@ final class HospitalTableViewFactory {
         tableView.dataSource = dataSource
         tableView.delegate = delegate
         tableView.estimatedSectionFooterHeight = 0
-        tableView.estimatedSectionHeaderHeight = 32
+        tableView.estimatedSectionHeaderHeight = 40
         tableView.register(aClass: HospitalSectionHeaderView.self)
         [
             HospitalTopCell.self,
@@ -20,7 +20,7 @@ final class HospitalTableViewFactory {
         ].forEach { tableView.register(cellClass: $0) }
         tableView.separatorStyle = .none
         tableView.sectionFooterHeight = 0
-        tableView.sectionHeaderHeight = 32
+        tableView.sectionHeaderHeight = 40
         tableView.showsVerticalScrollIndicator = false
         return tableView
     }

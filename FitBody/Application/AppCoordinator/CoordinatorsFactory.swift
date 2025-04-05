@@ -85,4 +85,11 @@ final class CoordinatorsFactory {
             modulesFactory: ModulesFactory()
         )
     }
+    
+    func makeWorkout(with router: Router) -> Coordinator & WorkoutCoordinatorOutput {
+        WorkoutCoordinator(
+            router: router,
+            modulesFactory: ModulesFactory()
+        )
+    }
 }

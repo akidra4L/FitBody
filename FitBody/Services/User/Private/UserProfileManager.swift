@@ -20,12 +20,20 @@ extension UserProfileManager: UserProfileProvider {
     func get() async throws -> UserProfile {
         try await Task.sleep(nanoseconds: 500_000_000)
         
+        var dateComponents = DateComponents()
+        dateComponents.year = 2003
+        dateComponents.month = 3
+        dateComponents.day = 7
+        
+        let calendar = Calendar.current
+        let date = calendar.date(from: dateComponents)
+        
         let userProfile = UserProfile(
             firstName: "Alikhan",
             lastName: "Gubayev",
             email: "alikhan.g@1fit.app",
             gender: .man,
-            birthDate: Date(),
+            birthDate: date!,
             weight: 65,
             height: 170
         )
