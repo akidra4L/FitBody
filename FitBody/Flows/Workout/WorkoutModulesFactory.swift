@@ -1,11 +1,11 @@
 import Foundation
 
 protocol WorkoutModulesFactory: AnyObject {
-    func makeWorkout() -> Presentable & WorkoutViewOutput
+    func makeWorkouts() -> Presentable & WorkoutsViewOutput
 }
 
 extension ModulesFactory: WorkoutModulesFactory {
-    func makeWorkout() -> Presentable & WorkoutViewOutput {
-        WorkoutViewController()
+    func makeWorkouts() -> Presentable & WorkoutsViewOutput {
+        WorkoutsViewController()
     }
 }

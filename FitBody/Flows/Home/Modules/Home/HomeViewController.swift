@@ -16,17 +16,6 @@ final class HomeViewController: BaseViewController, HomeViewOutput {
     var workoutDidSelect: (() -> Void)?
     
     private var parameters = HomeParameters()
-    private var sections: [HomeSection] = [] {
-        didSet {
-            guard oldValue != sections else {
-                return
-            }
-            
-            dataSourceImpl.sections = sections
-            delegateImpl.sections = sections
-            tableView.reloadData()
-        }
-    }
     
     private lazy var activityIndicatorView = ActivityIndicatorView(size: .large, color: Colors.fillPrimary)
     private lazy var tableView = HomeTableViewFactory().make(
@@ -109,7 +98,11 @@ final class HomeViewController: BaseViewController, HomeViewOutput {
     }
     
     private func configureSections() {
-        sections = HomeSectionsFactory().make(with: parameters)
+        let sections = HomeSectionsFactory().make(with: parameters)
+        
+        dataSourceImpl.sections = sections
+        delegateImpl.sections = sections
+        tableView.reloadData()
     }
     
     private func setupTableViewDelegateImpl() {

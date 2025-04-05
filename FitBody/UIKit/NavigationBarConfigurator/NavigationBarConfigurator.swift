@@ -9,8 +9,8 @@ final class NavigationBarConfigurator {
         userInterfaceStyle: UIUserInterfaceStyle = .unspecified
     ) {
         switch style {
-        case let .default(needsToDisplayShadow, backgroundColor):
-            configureDefaultNavigationBar(navigationBar, needsToDisplayShadow, backgroundColor)
+        case let .default(needsToDisplayShadow, backgroundColor, foregroundColor):
+            configureDefaultNavigationBar(navigationBar, needsToDisplayShadow, backgroundColor, foregroundColor)
         case .transparent:
             configureTranspartNavigationBar(navigationBar)
         }
@@ -21,18 +21,21 @@ final class NavigationBarConfigurator {
     private func configureDefaultNavigationBar(
         _ navigationBar: UINavigationBar,
         _ needsToDisplayShadow: Bool,
-        _ backgroundColor: UIColor
+        _ backgroundColor: UIColor,
+        _ foregroundColor: UIColor
     ) {
         navigationBar.layoutMargins.left = 16
         navigationBar.layoutMargins.right = 16
         navigationBar.prefersLargeTitles = true
         navigationBar.scrollEdgeAppearance = makeDefaultNavigationBarAppearance(
             needsToDisplayShadow: false,
-            backgroundColor: backgroundColor
+            backgroundColor: backgroundColor,
+            foregroundColor: foregroundColor
         )
         navigationBar.standardAppearance = makeDefaultNavigationBarAppearance(
             needsToDisplayShadow: needsToDisplayShadow,
-            backgroundColor: backgroundColor
+            backgroundColor: backgroundColor,
+            foregroundColor: foregroundColor
         )
     }
 
@@ -43,14 +46,15 @@ final class NavigationBarConfigurator {
 
     private func makeDefaultNavigationBarAppearance(
         needsToDisplayShadow: Bool,
-        backgroundColor: UIColor
+        backgroundColor: UIColor,
+        foregroundColor: UIColor
     ) -> UINavigationBarAppearance {
         let appearance = UINavigationBarAppearance(idiom: .phone)
         appearance.configureWithOpaqueBackground()
         appearance.backgroundColor = backgroundColor
-        appearance.largeTitleTextAttributes = makeLargeTitleTextAttributes()
+        appearance.largeTitleTextAttributes = makeLargeTitleTextAttributes(foregroundColor: foregroundColor)
         appearance.shadowColor = needsToDisplayShadow ? Colors.fillDivider : nil
-        appearance.titleTextAttributes = makeTitleTextAttributes()
+        appearance.titleTextAttributes = makeTitleTextAttributes(foregroundColor: foregroundColor)
         return appearance
     }
 
@@ -62,11 +66,15 @@ final class NavigationBarConfigurator {
         return appearance
     }
 
-    private func makeLargeTitleTextAttributes() -> [NSAttributedString.Key: Any] {
-        [.font: Fonts.title0, .foregroundColor: Colors.textPrimary]
+    private func makeLargeTitleTextAttributes(
+        foregroundColor: UIColor = Colors.textPrimary
+    ) -> [NSAttributedString.Key: Any] {
+        [.font: Fonts.title0, .foregroundColor: foregroundColor]
     }
 
-    private func makeTitleTextAttributes() -> [NSAttributedString.Key: Any] {
-        [.font: Fonts.title2, .foregroundColor: Colors.textPrimary]
+    private func makeTitleTextAttributes(
+        foregroundColor: UIColor = Colors.textPrimary
+    ) -> [NSAttributedString.Key: Any] {
+        [.font: Fonts.title2, .foregroundColor: foregroundColor]
     }
 }

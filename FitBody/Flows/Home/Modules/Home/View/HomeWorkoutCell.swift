@@ -74,7 +74,7 @@ final class HomeWorkoutCell: UITableViewCell {
     
     private func makeTitleLabel() -> UILabel {
         let label = UILabel(with: Fonts.title3)
-        label.text = "Workout"
+        label.text = "Workouts"
         label.textColor = Colors.textPrimary
         return label
     }

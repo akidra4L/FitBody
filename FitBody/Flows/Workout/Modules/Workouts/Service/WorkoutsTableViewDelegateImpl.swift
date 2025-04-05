@@ -1,14 +1,14 @@
 import UIKit
 
-// MARK: - WorkoutTableViewDelegateImpl
+// MARK: - WorkoutsTableViewDelegateImpl
 
-final class WorkoutTableViewDelegateImpl: NSObject {
-    var sections: [WorkoutSection] = []
+final class WorkoutsTableViewDelegateImpl: NSObject {
+    var sections: [WorkoutsSection] = []
 }
 
 // MARK: - UITableViewDelegate
 
-extension WorkoutTableViewDelegateImpl: UITableViewDelegate {
+extension WorkoutsTableViewDelegateImpl: UITableViewDelegate {
     func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {}
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
@@ -24,11 +24,13 @@ extension WorkoutTableViewDelegateImpl: UITableViewDelegate {
     }
     
     func tableView(_ tableView: UITableView, willDisplayHeaderView view: UIView, forSection section: Int) {
-        guard let view = view as? HomeSectionHeaderView else {
+        guard let view = view as? WorkoutsSectionHeaderView else {
             return
         }
         
         switch sections[section].kind {
+        case .workouts:
+            view.configure(with: "What do you want to Train?")
         case .top:
             return
         }
@@ -36,6 +38,8 @@ extension WorkoutTableViewDelegateImpl: UITableViewDelegate {
     
     func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
         switch sections[section].kind {
+        case .workouts:
+            tableView.dequeueReusableHeaderFooterView(WorkoutsSectionHeaderView.self)
         case .top:
             nil
         }
@@ -52,12 +56,16 @@ extension WorkoutTableViewDelegateImpl: UITableViewDelegate {
     private func heightForRowAt(_ tableView: UITableView, indexPath: IndexPath, isEstimated: Bool) -> CGFloat {
         switch sections[indexPath.section].kind {
         case .top:
-            isEstimated ? 212 : UITableView.automaticDimension
+            isEstimated ? 208 : UITableView.automaticDimension
+        case .workouts:
+            UITableView.automaticDimension
         }
     }
     
     private func heightForHeaderInSection(_ tableView: UITableView, in section: Int) -> CGFloat {
         switch sections[section].kind {
+        case .workouts:
+            40
         case .top:
             .leastNormalMagnitude
         }

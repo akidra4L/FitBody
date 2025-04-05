@@ -239,3 +239,33 @@ final class MockDataProvider {
         )
     ]
 }
+
+// MARK: - MockDataProvider.workouts
+
+extension MockDataProvider {
+    static var workouts: [WorkoutListItem] {
+        [
+            WorkoutListItem(
+                id: 1,
+                kind: .fullBody,
+                title: "Fullbody Workout",
+                exercises: 11,
+                duration: 32
+            ),
+            WorkoutListItem(
+                id: 2,
+                kind: .loweBody,
+                title: "Lowebody Workout",
+                exercises: 12,
+                duration: 40
+            ),
+            WorkoutListItem(
+                id: 3,
+                kind: .ab,
+                title: "AB Workout",
+                exercises: 14,
+                duration: 20
+            )
+        ]
+    }
+}

@@ -25,12 +25,12 @@ final class WorkoutCoordinator: Coordinator, WorkoutCoordinatorOutput {
     }
     
     func start() {
-        presentWorkout()
+        presentWorkouts()
     }
     
-    private func presentWorkout() {
-        let workout = modulesFactory.makeWorkout()
-        router.push(workout) { [onFinish] in
+    private func presentWorkouts() {
+        let workouts = modulesFactory.makeWorkouts()
+        router.push(workouts) { [onFinish] in
             onFinish?()
         }
     }

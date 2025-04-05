@@ -18,5 +18,6 @@ extension Resolver: ResolverRegistering {
         registerStartupScenarioServices()
         registerUserServices()
         registerUserSessionServices()
+        registerWorkoutServices()
     }
 }

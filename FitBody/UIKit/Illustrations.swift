@@ -57,7 +57,19 @@ enum Illustrations: Sendable {
         UIImage(named: "user-profile-set-illustration")!
     }
     
+    static var workoutAbIllustration: UIImage {
+        UIImage(named: "workout-ab-illustration")!
+    }
+    
     static var workoutGraphIllustration: UIImage {
         UIImage(named: "workout-graph-illustration")!
+    }
+    
+    static var workoutFullBodyIllustration: UIImage {
+        UIImage(named: "workout-full-body-illustration")!
+    }
+    
+    static var workoutLoweBodyIllustration: UIImage {
+        UIImage(named: "workout-lowe-body-illustration")!
     }
 }

@@ -83,6 +83,7 @@ final class HomeBookDoctorCell: UITableViewCell {
     
     private func makeActionButton() -> UIButton {
         let button = PrimaryButton(size: .small)
+        button.isUserInteractionEnabled = false
         button.setTitle("Learn More", for: .normal)
         return button
     }
