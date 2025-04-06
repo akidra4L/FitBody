@@ -7,6 +7,7 @@ import Resolver
 protocol HomeViewOutput: AnyObject {
     var doctorDidSelect: ((Doctor.ID) -> Void)? { get set }
     var workoutDidSelect: (() -> Void)? { get set }
+    var dietDidSelect: (() -> Void)? { get set }
 }
 
 // MARK: - HomeViewController
@@ -14,6 +15,7 @@ protocol HomeViewOutput: AnyObject {
 final class HomeViewController: BaseViewController, HomeViewOutput {
     var doctorDidSelect: ((Doctor.ID) -> Void)?
     var workoutDidSelect: (() -> Void)?
+    var dietDidSelect: (() -> Void)?
     
     private var parameters = HomeParameters()
     
@@ -114,6 +116,9 @@ final class HomeViewController: BaseViewController, HomeViewOutput {
         }
         delegateImpl.workoutDidSelect = { [workoutDidSelect] in
             workoutDidSelect?()
+        }
+        delegateImpl.dietDidSelect = { [dietDidSelect] in
+            dietDidSelect?()
         }
     }
     

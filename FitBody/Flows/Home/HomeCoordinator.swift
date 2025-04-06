@@ -39,6 +39,9 @@ final class HomeCoordinator: Coordinator, HomeCoordinatorOutput {
         home.workoutDidSelect = { [weak self] in
             self?.runWorkoutFlow()
         }
+        home.dietDidSelect = { [weak self] in
+            self?.runDietFlow()
+        }
         router.setRootModule(home, animated: false)
     }
     
@@ -53,6 +56,15 @@ final class HomeCoordinator: Coordinator, HomeCoordinatorOutput {
     
     private func runWorkoutFlow() {
         let coordinator = coordinatorsFactory.makeWorkout(with: router)
+        coordinator.onFinish = { [weak self, weak coordinator] in
+            self?.removeDependency(coordinator)
+        }
+        addDependency(coordinator)
+        coordinator.start()
+    }
+    
+    private func runDietFlow() {
+        let coordinator = coordinatorsFactory.makeDiet(with: router)
         coordinator.onFinish = { [weak self, weak coordinator] in
             self?.removeDependency(coordinator)
         }

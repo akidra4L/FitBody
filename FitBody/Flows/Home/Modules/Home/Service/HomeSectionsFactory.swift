@@ -4,8 +4,8 @@ final class HomeSectionsFactory {
     func make(with parameters: HomeParameters) -> [HomeSection] {
         [
             HomeSection(kind: .bookDoctor, rows: [.bookDoctor]),
-            HomeSection(kind: .waterIntake, rows: [.waterIntake]),
             HomeSection(kind: .workout, rows: [.workout]),
+            HomeSection(kind: .diet, rows: [.diet]),
             makeDoctorsSection(from: parameters.doctors)
         ].compactMap { $0 }
     }

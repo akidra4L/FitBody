@@ -5,6 +5,10 @@ enum Illustrations: Sendable {
         UIImage(named: "auth-success-illustration")!
     }
     
+    static var dietGraphIllustration: UIImage {
+        UIImage(named: "diet-graph-illustration")!
+    }
+    
     static var doctorOnboardingIllustration: UIImage {
         UIImage(named: "doctor-onboarding-illustration")!
     }
@@ -23,6 +27,10 @@ enum Illustrations: Sendable {
     
     static var homeBookDoctorIllustration: UIImage {
         UIImage(named: "home-book-doctor-illustration")!
+    }
+    
+    static var homeDietIllustration: UIImage {
+        UIImage(named: "home-diet-illustration")!
     }
     
     static var homeWorkoutIllustration: UIImage {

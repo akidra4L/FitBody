@@ -1,6 +1,6 @@
 import UIKit
 
-final class HomeTableViewFactory {
+final class DietTableViewFactory {
     func make(
         with dataSource: UITableViewDataSource,
         and delegate: UITableViewDelegate
@@ -13,13 +13,10 @@ final class HomeTableViewFactory {
         tableView.delegate = delegate
         tableView.estimatedSectionFooterHeight = 0
         tableView.estimatedSectionHeaderHeight = 40
-        tableView.register(aClass: HomeSectionHeaderView.self)
+        tableView.register(aClass: DietSectionHeaderView.self)
         [
-            HomeBookDoctorCell.self,
-            HomeWaterIntakeCell.self,
-            HomeDietCell.self,
-            HomeWorkoutCell.self,
-            DoctorsCell.self
+            DietTopCell.self,
+            DietMealCell.self
         ].forEach { tableView.register(cellClass: $0) }
         tableView.separatorStyle = .none
         tableView.sectionFooterHeight = 0

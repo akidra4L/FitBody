@@ -1,27 +1,14 @@
 import UIKit
 
-// MARK: - WorkoutsTableViewDelegateImpl
+// MARK: - DietTableViewDelegateImpl
 
-final class WorkoutsTableViewDelegateImpl: NSObject {
-    var sections: [WorkoutsSection] = []
-    
-    var workoutDidSelect: ((WorkoutListItem) -> Void)?
+final class DietTableViewDelegateImpl: NSObject {
+    var sections: [DietSection] = []
 }
 
 // MARK: - UITableViewDelegate
 
-extension WorkoutsTableViewDelegateImpl: UITableViewDelegate {
-    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        tableView.deselectRow(at: indexPath, animated: true)
-        
-        switch sections[indexPath.section].rows[indexPath.row] {
-        case let .workouts(workout):
-            workoutDidSelect?(workout)
-        case .top:
-            break
-        }
-    }
-    
+extension DietTableViewDelegateImpl: UITableViewDelegate {
     func tableView(_ tableView: UITableView, estimatedHeightForRowAt indexPath: IndexPath) -> CGFloat {
         heightForRowAt(tableView, indexPath: indexPath, isEstimated: true)
     }
@@ -31,13 +18,13 @@ extension WorkoutsTableViewDelegateImpl: UITableViewDelegate {
     }
     
     func tableView(_ tableView: UITableView, willDisplayHeaderView view: UIView, forSection section: Int) {
-        guard let view = view as? WorkoutsSectionHeaderView else {
+        guard let view = view as? DietSectionHeaderView else {
             return
         }
         
         switch sections[section].kind {
-        case .workouts:
-            view.configure(with: "What do you want to Train?")
+        case let .meals(title, count):
+            view.configure(with: title, and: "\(count) meals")
         case .top:
             return
         }
@@ -45,8 +32,8 @@ extension WorkoutsTableViewDelegateImpl: UITableViewDelegate {
     
     func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
         switch sections[section].kind {
-        case .workouts:
-            tableView.dequeueReusableHeaderFooterView(WorkoutsSectionHeaderView.self)
+        case .meals:
+            tableView.dequeueReusableHeaderFooterView(DietSectionHeaderView.self)
         case .top:
             nil
         }
@@ -62,16 +49,14 @@ extension WorkoutsTableViewDelegateImpl: UITableViewDelegate {
     
     private func heightForRowAt(_ tableView: UITableView, indexPath: IndexPath, isEstimated: Bool) -> CGFloat {
         switch sections[indexPath.section].kind {
-        case .top:
-            isEstimated ? 208 : UITableView.automaticDimension
-        case .workouts:
+        case .top, .meals:
             UITableView.automaticDimension
         }
     }
     
     private func heightForHeaderInSection(_ tableView: UITableView, in section: Int) -> CGFloat {
         switch sections[section].kind {
-        case .workouts:
+        case .meals:
             40
         case .top:
             .leastNormalMagnitude

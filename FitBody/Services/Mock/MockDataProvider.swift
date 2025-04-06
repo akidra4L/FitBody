@@ -423,3 +423,32 @@ extension MockDataProvider {
         ]
     }
 }
+
+// MARK: - MockDataProvider.meals
+
+extension MockDataProvider {
+    static var meals: [Meal] {
+        [
+            Meal(kind: .breakfast, title: "Pancake", date: makeDate(hour: 7, minute: 0)),
+            Meal(kind: .breakfast, title: "Pancake", date: makeDate(hour: 7, minute: 30)),
+            Meal(kind: .lunch, title: "Chicken steak", date: makeDate(hour: 1, minute: 0)),
+            Meal(kind: .lunch, title: "Teak", date: makeDate(hour: 1, minute: 20)),
+            Meal(kind: .snacks, title: "Apple", date: makeDate(hour: 4, minute: 31)),
+            Meal(kind: .dinner, title: "Salad", date: makeDate(hour: 7, minute: 10)),
+        ]
+    }
+    
+    private static func makeDate(hour: Int, minute: Int) -> Date {
+        let calendar = Calendar.current
+        let today = Date()
+        
+        let components = calendar.dateComponents([.year, .month, .day], from: today)
+        var dateComponents = DateComponents()
+        dateComponents.year = components.year
+        dateComponents.month = components.month
+        dateComponents.day = components.day
+        dateComponents.hour = hour
+        dateComponents.minute = minute
+        return calendar.date(from: dateComponents) ?? Date()
+    }
+}

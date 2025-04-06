@@ -92,4 +92,11 @@ final class CoordinatorsFactory {
             modulesFactory: ModulesFactory()
         )
     }
+    
+    func makeDiet(with router: Router) -> Coordinator & DietCoordinatorOutput {
+        DietCoordinator(
+            router: router,
+            modulesFactory: ModulesFactory()
+        )
+    }
 }

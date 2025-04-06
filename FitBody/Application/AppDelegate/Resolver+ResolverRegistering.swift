@@ -10,6 +10,7 @@ extension Resolver: ResolverRegistering {
     private static func registerAppServices() {
         registerAuthServices()
         registerAuthorizedUserDataFetch()
+        registerDietServices()
         registerDoctorServices()
         registerHomeServices()
         registerHospitalServices()

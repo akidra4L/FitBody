@@ -9,12 +9,6 @@ final class WorkoutTableViewDelegateImpl: NSObject {
 // MARK: - UITableViewDelegate
 
 extension WorkoutTableViewDelegateImpl: UITableViewDelegate {
-    func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {}
-    
-    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        tableView.deselectRow(at: indexPath, animated: true)
-    }
-    
     func tableView(_ tableView: UITableView, estimatedHeightForRowAt indexPath: IndexPath) -> CGFloat {
         heightForRowAt(tableView, indexPath: indexPath, isEstimated: true)
     }
