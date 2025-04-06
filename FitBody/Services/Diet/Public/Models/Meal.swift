@@ -11,7 +11,7 @@ struct Meal: Decodable, Equatable, Sendable {
 // MARK: - Meal.Kind
 
 extension Meal {
-    enum Kind: Decodable, Equatable, Sendable {
+    enum Kind: CaseIterable, Decodable, Equatable, Sendable {
         case breakfast
         case lunch
         case snacks

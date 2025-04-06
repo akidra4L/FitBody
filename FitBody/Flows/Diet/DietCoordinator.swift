@@ -30,8 +30,29 @@ final class DietCoordinator: Coordinator, DietCoordinatorOutput {
     
     private func presentDiet() {
         let diet = modulesFactory.makeDiet()
+        diet.addMealTap = { [weak self] completion in
+            self?.presentMealAdd(completion: completion)
+        }
         router.push(diet) { [onFinish] in
             onFinish?()
         }
+    }
+    
+    private func presentMealAdd(completion: @escaping (Meal) -> Void) {
+        let mealAdd = modulesFactory.makeMealAdd()
+        mealAdd.onClose = { [weak self] in
+            self?.router.dismissModule()
+        }
+        mealAdd.onSuccess = { [weak self] meal in
+            self?.router.dismissModule {
+                completion(meal)
+            }
+        }
+        router.presentFloatingPanel(
+            contentModule: mealAdd,
+            attributes: FloatingPanelAttributes(
+                with: .adaptive(contentLayout: mealAdd.contentLayout)
+            )
+        )
     }
 }

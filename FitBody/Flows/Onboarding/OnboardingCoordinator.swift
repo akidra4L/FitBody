@@ -26,8 +26,6 @@ final class OnboardingCoordinator: Coordinator, OnboardingCoordinatorOutput {
     
     func start() {
         presentOnboarding(with: .trackProgress)
-        
-        onboardingSeenSetter.set()
     }
     
     private func presentOnboarding(with kind: OnboardingKind) {
@@ -49,6 +47,8 @@ final class OnboardingCoordinator: Coordinator, OnboardingCoordinatorOutput {
         case .getSupport:
             presentOnboarding(with: .rehabCenter)
         case .rehabCenter:
+            onboardingSeenSetter.set()
+            
             onFinish?()
         }
     }

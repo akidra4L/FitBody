@@ -432,7 +432,7 @@ extension MockDataProvider {
             Meal(kind: .breakfast, title: "Pancake", date: makeDate(hour: 7, minute: 0)),
             Meal(kind: .breakfast, title: "Pancake", date: makeDate(hour: 7, minute: 30)),
             Meal(kind: .lunch, title: "Chicken steak", date: makeDate(hour: 1, minute: 0)),
-            Meal(kind: .lunch, title: "Teak", date: makeDate(hour: 1, minute: 20)),
+            Meal(kind: .lunch, title: "Tea", date: makeDate(hour: 1, minute: 20)),
             Meal(kind: .snacks, title: "Apple", date: makeDate(hour: 4, minute: 31)),
             Meal(kind: .dinner, title: "Salad", date: makeDate(hour: 7, minute: 10)),
         ]
