@@ -3,7 +3,7 @@ import Foundation
 // MARK: - WorkoutListItem
 
 struct WorkoutListItem: Decodable, Equatable, Sendable {
-    typealias ID = Int
+    typealias ID = Workout.ID
     
     let id: ID
     let kind: Kind
@@ -17,7 +17,7 @@ struct WorkoutListItem: Decodable, Equatable, Sendable {
 extension WorkoutListItem {
     enum Kind: Decodable, Equatable, Sendable {
         case fullBody
-        case loweBody
+        case lowerBody
         case ab
     }
 }

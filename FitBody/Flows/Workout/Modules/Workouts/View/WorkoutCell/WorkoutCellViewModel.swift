@@ -1,19 +1,19 @@
 import UIKit
 
-struct WorkoutViewModel: Sendable {
+struct WorkoutCellViewModel: Sendable {
     var title: String {
         workout.title
     }
     
     var subtitle: String {
-        "\(workout.exercises) Exercises | \(workout.duration)mins"
+        "\(workout.exercises) Exercises | \(workout.duration) mins"
     }
     
     var illustration: UIImage {
         switch workout.kind {
         case .fullBody:
             Illustrations.workoutFullBodyIllustration
-        case .loweBody:
+        case .lowerBody:
             Illustrations.workoutLoweBodyIllustration
         case .ab:
             Illustrations.workoutAbIllustration

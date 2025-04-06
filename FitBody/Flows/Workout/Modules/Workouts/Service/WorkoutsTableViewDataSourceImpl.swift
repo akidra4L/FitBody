@@ -24,7 +24,7 @@ extension WorkoutsTableViewDataSourceImpl: UITableViewDataSource {
         case let .workouts(workout):
             let cell: WorkoutCell = tableView.dequeueReusableCell(for: indexPath)
             cell.configure(
-                with: WorkoutViewModel(with: workout)
+                with: WorkoutCellViewModel(with: workout)
             )
             return cell
         }

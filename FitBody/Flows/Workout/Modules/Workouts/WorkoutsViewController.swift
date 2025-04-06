@@ -4,11 +4,15 @@ import Resolver
 
 // MARK: - WorkoutsViewOutput
 
-protocol WorkoutsViewOutput: AnyObject {}
+protocol WorkoutsViewOutput: AnyObject {
+    var workoutDidSelect: ((WorkoutListItem) -> Void)? { get set }
+}
 
 // MARK: - WorkoutsViewController
 
 final class WorkoutsViewController: BaseViewController, WorkoutsViewOutput {
+    var workoutDidSelect: ((WorkoutListItem) -> Void)?
+    
     private var parameters = WorkoutsParameters()
     
     private lazy var tableView = WorkoutsTableViewFactory().make(
@@ -26,6 +30,7 @@ final class WorkoutsViewController: BaseViewController, WorkoutsViewOutput {
         super.viewDidLoad()
         
         setup()
+        setupDelegateImpl()
         getWorkouts()
     }
     
@@ -84,6 +89,12 @@ final class WorkoutsViewController: BaseViewController, WorkoutsViewOutput {
         }
         activityIndicatorView.snp.makeConstraints { make in
             make.center.equalToSuperview()
+        }
+    }
+    
+    private func setupDelegateImpl() {
+        delegateImpl.workoutDidSelect = { [workoutDidSelect] workout in
+            workoutDidSelect?(workout)
         }
     }
     

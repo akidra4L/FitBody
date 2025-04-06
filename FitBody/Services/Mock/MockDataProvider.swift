@@ -243,28 +243,182 @@ final class MockDataProvider {
 // MARK: - MockDataProvider.workouts
 
 extension MockDataProvider {
-    static var workouts: [WorkoutListItem] {
+    static var workoutsListItems: [WorkoutListItem] {
         [
             WorkoutListItem(
                 id: 1,
                 kind: .fullBody,
                 title: "Fullbody Workout",
-                exercises: 11,
+                exercises: workouts.first(where: { $0.id == 1 })?.exercises.count ?? 0,
                 duration: 32
             ),
             WorkoutListItem(
                 id: 2,
-                kind: .loweBody,
-                title: "Lowebody Workout",
-                exercises: 12,
+                kind: .lowerBody,
+                title: "Lower body Workout",
+                exercises: workouts.first(where: { $0.id == 2 })?.exercises.count ?? 0,
                 duration: 40
             ),
             WorkoutListItem(
                 id: 3,
                 kind: .ab,
                 title: "AB Workout",
-                exercises: 14,
+                exercises: workouts.first(where: { $0.id == 3 })?.exercises.count ?? 0,
                 duration: 20
+            )
+        ]
+    }
+}
+
+extension MockDataProvider {
+    static var workouts: [Workout] {
+        [
+            Workout(
+                id: 1,
+                difficulty: "Beginner",
+                equipments: [
+                    Workout.Equipment(
+                        icon: URL(string: "https://img.icons8.com/?size=100&id=YLFCffSVtuJb&format=png&color=000000")!,
+                        title: "Skipping Rope"
+                    ),
+                    Workout.Equipment(
+                        icon: URL(string: "https://img.icons8.com/?size=100&id=9784&format=png&color=000000")!,
+                        title: "Barbell"
+                    ),
+                    Workout.Equipment(
+                        icon: URL(string: "https://img.icons8.com/?size=100&id=yH2dpwTADh8F&format=png&color=000000")!,
+                        title: "Yoga Mat"
+                    ),
+                    Workout.Equipment(
+                        icon: URL(string: "https://img.icons8.com/?size=100&id=11085&format=png&color=000000")!,
+                        title: "Bottle of Water"
+                    )
+                ],
+                exercises: [
+                    Workout.Exercise(
+                        id: 1,
+                        image: URL(string: "https://media.istockphoto.com/id/1202049171/photo/young-woman-running-on-a-treadmill-indoors.jpg?s=612x612&w=0&k=20&c=UydaV16X2S-7HuLIRDH2qyrMUVCLCeAaCvwS3SvJXwo=")!,
+                        title: "Warm Up",
+                        duration: 300,
+                        repeats: nil
+                    ),
+                    Workout.Exercise(
+                        id: 2,
+                        image: URL(string: "https://images.ctfassets.net/3s5io6mnxfqz/mPjNFhIXGEQbyDbF1FiIe/23426c3ae4d2ab81c32c4e07d234bbe6/AdobeStock_418407245_2.jpeg?w=1920")!,
+                        title: "Jumping Jack",
+                        duration: nil,
+                        repeats: 12
+                    ),
+                    Workout.Exercise(
+                        id: 3,
+                        image: URL(string: "https://www.trevorlindenfitness.com/wp-content/uploads/2016/09/Depositphotos_115488888_original.jpg")!,
+                        title: "Arm Raises",
+                        duration: 60,
+                        repeats: nil
+                    ),
+                    Workout.Exercise(
+                        id: 4,
+                        image: URL(string: "https://cdn.yogajournal.com/wp-content/uploads/2022/06/Upward-Facing-Dog-Mod-1_Andrew-Clark-e1670972827524-1024x598.jpg")!,
+                        title: "Cobra Stretch",
+                        duration: 180,
+                        repeats: nil
+                    ),
+                    Workout.Exercise(
+                        id: 0,
+                        image: URL(string: "https://www.blenderbottle.com/cdn/shop/files/Woman_Drinking_from_a_BlenderBottle_Protein_Shaker_Bottle_Portrait.jpg?v=1674668829&width=1500")!,
+                        title: "Rest and Drink",
+                        duration: 120,
+                        repeats: nil
+                    )
+                ]
+            ),
+            Workout(
+                id: 2,
+                difficulty: "Beginner",
+                equipments: [
+                    Workout.Equipment(
+                        icon: URL(string: "https://img.icons8.com/?size=100&id=9784&format=png&color=000000")!,
+                        title: "Barbell"
+                    ),
+                    Workout.Equipment(
+                        icon: URL(string: "https://img.icons8.com/?size=100&id=11085&format=png&color=000000")!,
+                        title: "Bottle of Water"
+                    )
+                ],
+                exercises: [
+                    Workout.Exercise(
+                        id: 1,
+                        image: URL(string: "https://media.istockphoto.com/id/1202049171/photo/young-woman-running-on-a-treadmill-indoors.jpg?s=612x612&w=0&k=20&c=UydaV16X2S-7HuLIRDH2qyrMUVCLCeAaCvwS3SvJXwo=")!,
+                        title: "Warm Up",
+                        duration: 300,
+                        repeats: nil
+                    ),
+                    Workout.Exercise(
+                        id: 5,
+                        image: URL(string: "https://hips.hearstapps.com/hmg-prod/images/man-exercising-at-home-royalty-free-image-1645047847.jpg?resize=980:*")!,
+                        title: "Squat",
+                        duration: nil,
+                        repeats: 12
+                    ),
+                    Workout.Exercise(
+                        id: 6,
+                        image: URL(string: "https://hips.hearstapps.com/hmg-prod/images/glutebridge-1603107150.jpg?resize=980:*")!,
+                        title: "Glute bridge",
+                        duration: nil,
+                        repeats: 12
+                    ),
+                    Workout.Exercise(
+                        id: 0,
+                        image: URL(string: "https://www.blenderbottle.com/cdn/shop/files/Woman_Drinking_from_a_BlenderBottle_Protein_Shaker_Bottle_Portrait.jpg?v=1674668829&width=1500")!,
+                        title: "Rest and Drink",
+                        duration: 120,
+                        repeats: nil
+                    )
+                ]
+            ),
+            Workout(
+                id: 3,
+                difficulty: "Beginner",
+                equipments: [
+                    Workout.Equipment(
+                        icon: URL(string: "https://img.icons8.com/?size=100&id=yH2dpwTADh8F&format=png&color=000000")!,
+                        title: "Yoga Mat"
+                    ),
+                    Workout.Equipment(
+                        icon: URL(string: "https://img.icons8.com/?size=100&id=11085&format=png&color=000000")!,
+                        title: "Bottle of Water"
+                    )
+                ],
+                exercises: [
+                    Workout.Exercise(
+                        id: 1,
+                        image: URL(string: "https://media.istockphoto.com/id/1202049171/photo/young-woman-running-on-a-treadmill-indoors.jpg?s=612x612&w=0&k=20&c=UydaV16X2S-7HuLIRDH2qyrMUVCLCeAaCvwS3SvJXwo=")!,
+                        title: "Warm Up",
+                        duration: 300,
+                        repeats: nil
+                    ),
+                    Workout.Exercise(
+                        id: 7,
+                        image: URL(string: "https://steelsupplements.com/cdn/shop/articles/Bicycle_crunch_-_cover_-_shutterstock_1420680866_1000x.jpg?v=1670162703")!,
+                        title: "Bicycle crunch",
+                        duration: nil,
+                        repeats: 12
+                    ),
+                    Workout.Exercise(
+                        id: 8,
+                        image: URL(string: "https://hips.hearstapps.com/hmg-prod/images/hdm119918mh15842-1545237096.png?crop=0.668xw:1.00xh;0.117xw,0&resize=1200:*")!,
+                        title: "Plank",
+                        duration: 90,
+                        repeats: nil
+                    ),
+                    Workout.Exercise(
+                        id: 0,
+                        image: URL(string: "https://www.blenderbottle.com/cdn/shop/files/Woman_Drinking_from_a_BlenderBottle_Protein_Shaker_Bottle_Portrait.jpg?v=1674668829&width=1500")!,
+                        title: "Rest and Drink",
+                        duration: 120,
+                        repeats: nil
+                    )
+                ]
             )
         ]
     }

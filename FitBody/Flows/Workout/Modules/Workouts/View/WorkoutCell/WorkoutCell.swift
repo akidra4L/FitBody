@@ -28,7 +28,7 @@ final class WorkoutCell: UITableViewCell {
         }
     }
     
-    func configure(with viewModel: WorkoutViewModel) {
+    func configure(with viewModel: WorkoutCellViewModel) {
         titleLabel.text = viewModel.title
         subtitleLabel.text = viewModel.subtitle
         illustrationImageView.image = viewModel.illustration
