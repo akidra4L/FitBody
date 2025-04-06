@@ -13,6 +13,7 @@ extension WorkoutSection {
     enum Kind: Equatable, Sendable {
         case top
         case info
+        case difficulty
         case equipments(_ count: Int)
         case exercises
     }
@@ -24,6 +25,7 @@ extension WorkoutSection {
     enum Row: Equatable, Sendable {
         case top(WorkoutListItem.Kind)
         case info(WorkoutListItem)
+        case difficulty(String)
         case equipments([Workout.Equipment])
         case exercise(Workout.Exercise)
     }

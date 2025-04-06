@@ -37,6 +37,10 @@ extension WorkoutTableViewDataSourceImpl: UITableViewDataSource {
                 with: WorkoutInfoViewModel(with: workoutListItem)
             )
             return cell
+        case let .difficulty(difficulty):
+            let cell: WorkoutDifficultyCell = tableView.dequeueReusableCell(for: indexPath)
+            cell.configure(with: difficulty)
+            return cell
         case let .equipments(equipments):
             let cell: WorkoutEquipmentsCell = tableView.dequeueReusableCell(for: indexPath)
             cell.configure(with: equipments)

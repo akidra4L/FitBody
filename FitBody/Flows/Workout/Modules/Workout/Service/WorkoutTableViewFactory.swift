@@ -17,6 +17,7 @@ final class WorkoutTableViewFactory {
         [
             WorkoutTopCell.self,
             WorkoutInfoCell.self,
+            WorkoutDifficultyCell.self,
             WorkoutEquipmentsCell.self,
             WorkoutExerciseCell.self
         ].forEach { tableView.register(cellClass: $0) }

@@ -33,7 +33,7 @@ extension WorkoutTableViewDelegateImpl: UITableViewDelegate {
             view.configure(with: "Exercises")
         case let .equipments(count):
             view.configure(with: "You’ll Need", and: "\(count) items")
-        case .top, .info:
+        case .top, .info, .difficulty:
             return
         }
     }
@@ -42,7 +42,7 @@ extension WorkoutTableViewDelegateImpl: UITableViewDelegate {
         switch sections[section].kind {
         case .exercises, .equipments:
             tableView.dequeueReusableHeaderFooterView(WorkoutSectionHeaderView.self)
-        case .top, .info:
+        case .top, .info, .difficulty:
             nil
         }
     }
@@ -59,7 +59,7 @@ extension WorkoutTableViewDelegateImpl: UITableViewDelegate {
         switch sections[indexPath.section].kind {
         case .equipments:
             equipementItemHeight()
-        case .top, .info, .exercises:
+        case .top, .info, .difficulty, .exercises:
             UITableView.automaticDimension
         }
     }
@@ -68,7 +68,7 @@ extension WorkoutTableViewDelegateImpl: UITableViewDelegate {
         switch sections[section].kind {
         case .exercises, .equipments:
             40
-        case .top, .info:
+        case .top, .info, .difficulty:
             .leastNormalMagnitude
         }
     }
