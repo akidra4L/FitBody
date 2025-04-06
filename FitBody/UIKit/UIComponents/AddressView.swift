@@ -42,7 +42,7 @@ final class AddressView: UIView {
     
     private func makeIconImageView() -> UIImageView {
         let imageView = UIImageView(image: Icons.address16x16)
-        imageView.tintColor = Colors.iconSecondary
+        imageView.tintColor = Colors.fillPrimary
         return imageView
     }
     

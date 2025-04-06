@@ -30,6 +30,7 @@ final class TabBarViewController: UITabBarController, TabBarViewOutput {
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        setup()
         setupObservers()
     }
     
@@ -61,6 +62,10 @@ final class TabBarViewController: UITabBarController, TabBarViewOutput {
         }
         
         selectedIndex = index
+    }
+    
+    private func setup() {
+        tabBar.tintColor = Colors.fillPrimary
     }
     
     private func showStartupScenarioIfNeeded() {

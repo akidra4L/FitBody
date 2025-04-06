@@ -11,11 +11,11 @@ protocol WorkoutsViewOutput: AnyObject {}
 final class WorkoutsViewController: BaseViewController, WorkoutsViewOutput {
     private var parameters = WorkoutsParameters()
     
-    private lazy var activityIndicatorView = ActivityIndicatorView(size: .large, color: Colors.fillPrimary)
     private lazy var tableView = WorkoutsTableViewFactory().make(
         with: dataSourceImpl,
         and: delegateImpl
     )
+    private lazy var activityIndicatorView = ActivityIndicatorView(size: .large, color: Colors.fillPrimary)
     
     private lazy var dataSourceImpl = WorkoutsTableViewDataSourceImpl()
     private lazy var delegateImpl = WorkoutsTableViewDelegateImpl()
@@ -79,11 +79,11 @@ final class WorkoutsViewController: BaseViewController, WorkoutsViewOutput {
     }
     
     private func setupConstraints() {
-        activityIndicatorView.snp.makeConstraints { make in
-            make.center.equalToSuperview()
-        }
         tableView.snp.makeConstraints { make in
             make.directionalEdges.equalToSuperview()
+        }
+        activityIndicatorView.snp.makeConstraints { make in
+            make.center.equalToSuperview()
         }
     }
     
