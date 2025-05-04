@@ -4,6 +4,7 @@ import Alamofire
 
 protocol NetworkClient: AnyObject, Sendable {
     func request<Parameters: Encodable & Sendable, Response: Decodable & Sendable>(
+        _ baseURL: String?,
         _ relativePath: String,
         method: HTTPMethod,
         parameters: Parameters,
@@ -20,6 +21,7 @@ extension NetworkClient {
         headers: HTTPHeaders? = nil
     ) async throws -> Response {
         try await request(
+            nil,
             relativePath,
             method: .get,
             parameters: parameters,
@@ -33,6 +35,7 @@ extension NetworkClient {
         headers: HTTPHeaders? = nil
     ) async throws -> Response {
         try await request(
+            nil,
             relativePath,
             method: .post,
             parameters: parameters,

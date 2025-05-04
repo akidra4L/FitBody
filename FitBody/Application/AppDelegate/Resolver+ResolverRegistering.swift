@@ -12,6 +12,7 @@ extension Resolver: ResolverRegistering {
         registerAuthorizedUserDataFetch()
         registerDietServices()
         registerDoctorServices()
+        registerGeminiServices()
         registerHomeServices()
         registerHospitalServices()
         registerOnboardingServices()

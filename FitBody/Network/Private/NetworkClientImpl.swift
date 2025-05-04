@@ -12,13 +12,14 @@ final class NetworkClientImpl: NetworkClient {
     private let session = Session()
     
     func request<Parameters: Encodable & Sendable, Response: Decodable & Sendable>(
+        _ baseURL: String?,
         _ relativePath: String,
         method: HTTPMethod,
         parameters: Parameters,
         headers: HTTPHeaders?
     ) async throws -> Response {
         let request = session.request(
-            Constants.baseURL + relativePath,
+            (baseURL ?? Constants.baseURL) + relativePath,
             method: method,
             parameters: parameters,
             headers: headers

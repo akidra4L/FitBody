@@ -36,19 +36,6 @@ final class HomeViewController: BaseViewController, HomeViewOutput {
         setup()
         setupContent()
         setupTableViewDelegateImpl()
-        
-        print(loadAPIKey())
-    }
-    
-    func loadAPIKey() -> String {
-        guard
-            let path = Bundle.main.path(forResource: "Secrets", ofType: "plist"),
-            let dict = NSDictionary(contentsOfFile: path),
-            let key = dict["OpenAI_API_Key"] as? String
-        else {
-            return "OPEN_AI_KEY NOT FOUND"
-        }
-        return key
     }
     
     override func configureNavigationBar() {
