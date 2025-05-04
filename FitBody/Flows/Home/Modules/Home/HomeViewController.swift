@@ -8,6 +8,7 @@ protocol HomeViewOutput: AnyObject {
     var doctorDidSelect: ((Doctor.ID) -> Void)? { get set }
     var workoutDidSelect: (() -> Void)? { get set }
     var dietDidSelect: (() -> Void)? { get set }
+    var consultationDidSelect: (() -> Void)? { get set }
 }
 
 // MARK: - HomeViewController
@@ -16,6 +17,7 @@ final class HomeViewController: BaseViewController, HomeViewOutput {
     var doctorDidSelect: ((Doctor.ID) -> Void)?
     var workoutDidSelect: (() -> Void)?
     var dietDidSelect: (() -> Void)?
+    var consultationDidSelect: (() -> Void)?
     
     private var parameters = HomeParameters()
     
@@ -119,6 +121,9 @@ final class HomeViewController: BaseViewController, HomeViewOutput {
         }
         delegateImpl.dietDidSelect = { [dietDidSelect] in
             dietDidSelect?()
+        }
+        delegateImpl.consultationDidSelect = { [consultationDidSelect] in
+            consultationDidSelect?()
         }
     }
     

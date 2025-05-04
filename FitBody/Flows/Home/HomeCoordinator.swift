@@ -42,7 +42,15 @@ final class HomeCoordinator: Coordinator, HomeCoordinatorOutput {
         home.dietDidSelect = { [weak self] in
             self?.runDietFlow()
         }
+        home.consultationDidSelect = { [weak self] in
+            self?.presentConsultation()
+        }
         router.setRootModule(home, animated: false)
+    }
+    
+    private func presentConsultation() {
+        let consultation = modulesFactory.makeConsultation()
+        router.push(consultation)
     }
     
     private func runDoctorFlow(with id: Doctor.ID) {

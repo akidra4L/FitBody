@@ -33,6 +33,8 @@ extension HomeTableViewDataSourceImpl: UITableViewDataSource {
             return tableView.dequeueReusableCell(HomeWorkoutCell.self, for: indexPath)
         case .diet:
             return tableView.dequeueReusableCell(HomeDietCell.self, for: indexPath)
+        case .consultation:
+            return tableView.dequeueReusableCell(HomeConsultationCell.self, for: indexPath)
         }
     }
 }

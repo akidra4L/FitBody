@@ -35,7 +35,7 @@ final class GeminiProviderImpl: GeminiProvider {
             return nil
         }
         
-        guard let httpResponse = response as? HTTPURLResponse else {
+        guard response is HTTPURLResponse else {
             return nil
         }
 

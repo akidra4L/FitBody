@@ -10,6 +10,7 @@ final class HomeTableViewDelegateImpl: NSObject {
     var doctorDidSelect: ((Doctor.ID) -> Void)?
     var workoutDidSelect: (() -> Void)?
     var dietDidSelect: (() -> Void)?
+    var consultationDidSelect: (() -> Void)?
 }
 
 // MARK: - UITableViewDelegate
@@ -36,6 +37,8 @@ extension HomeTableViewDelegateImpl: UITableViewDelegate {
             workoutDidSelect?()
         case .diet:
             dietDidSelect?()
+        case .consultation:
+            consultationDidSelect?()
         case .doctors:
             return
         }
@@ -66,7 +69,7 @@ extension HomeTableViewDelegateImpl: UITableViewDelegate {
         switch sections[section].kind {
         case .doctors:
             tableView.dequeueReusableHeaderFooterView(HomeSectionHeaderView.self)
-        case .bookDoctor, .waterIntake, .workout, .diet:
+        case .bookDoctor, .waterIntake, .workout, .diet, .consultation:
             nil
         }
     }
@@ -91,6 +94,8 @@ extension HomeTableViewDelegateImpl: UITableViewDelegate {
             isEstimated ? 92 : UITableView.automaticDimension
         case .diet:
             isEstimated ? 160 : UITableView.automaticDimension
+        case .consultation:
+            isEstimated ? 100 : UITableView.automaticDimension
         }
     }
     
@@ -98,7 +103,7 @@ extension HomeTableViewDelegateImpl: UITableViewDelegate {
         switch sections[section].kind {
         case .doctors:
             40
-        case .bookDoctor, .waterIntake, .workout, .diet:
+        case .bookDoctor, .waterIntake, .workout, .diet, .consultation:
             .leastNormalMagnitude
         }
     }

@@ -37,6 +37,10 @@ extension Icons {
 // MARK: - 24
 
 extension Icons {
+    static var arrowRight24x24: UIImage {
+        UIImage(named: "arrow-right-24x24")!
+    }
+    
     static var graph24x24: UIImage {
         UIImage(named: "graph-24x24")!
     }

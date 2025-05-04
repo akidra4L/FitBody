@@ -16,6 +16,7 @@ extension HomeSection {
         case doctors
         case workout
         case diet
+        case consultation
     }
 }
 
@@ -28,5 +29,6 @@ extension HomeSection {
         case doctors([DoctorListItem])
         case workout
         case diet
+        case consultation
     }
 }

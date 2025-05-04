@@ -16,6 +16,7 @@ final class HomeTableViewFactory {
         tableView.register(aClass: HomeSectionHeaderView.self)
         [
             HomeBookDoctorCell.self,
+            HomeConsultationCell.self,
             HomeWaterIntakeCell.self,
             HomeDietCell.self,
             HomeWorkoutCell.self,
